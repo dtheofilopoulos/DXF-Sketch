@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.6 — 14 Nov 2026
+- Landscape / portrait button on the right toolbar, under the zoom buttons. It shows which way the laboratory lies; one tap turns the whole laboratory 90° the other way, whether or not north has been set. North turns with it, so it keeps pointing the right way.
+
 ## 3.3.5 — 14 Nov 2026
 - Laboratory menu (and the hold / right-click menu on the plan): Landscape or Portrait turns the whole laboratory 90° so its long side runs across or up. Walls, furniture, services, markup and north turn with it, and the DXF comes out the same way. Undo turns it back.
 
