@@ -27,7 +27,7 @@ UI_FILE = HERE / "DXF-Sketch.html"
 OUT_DIR = HERE / "Sketches"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "1.6.0"
+VERSION = "1.7.0"
 
 # ── look ─────────────────────────────────────────────────────────────────────
 TEAL, ORANGE, RED = "\033[38;2;0;153;153m", "\033[38;2;236;102;2m", "\033[38;2;217;58;58m"

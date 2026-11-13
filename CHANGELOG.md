@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0 — 13 Nov 2026
+- The six steps now sit in a floating dock on the drawing: icons with a count or a tick, the current step expanded with its name. Keys 1–6 jump between steps.
+- Fit leaves room for the title block and the dock, so the plan is never hidden under them.
+
 ## 1.6.0 — 13 Nov 2026
 - Apple Pencil draws markup on the plan; fingers still pan and zoom. A pen button lets a finger or mouse draw too. Markup goes to the DXF on a new **Markup** layer (colour 1).
 - Rooms can start as a rectangle or an L with typed sizes; a rectangle stays rectangular when you change one side.
