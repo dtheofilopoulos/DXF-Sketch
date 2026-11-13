@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.5.0 — 13 Nov 2026
+- New layout: a flat application bar on top, the seven steps as a navigation bar of tabs under it (the active step underlined), the side panel and the drawing flush against each other with thin separators, and a status bar at the bottom with coordinates, legend, grid and units. The floating step dock is gone, so the drawing has more room.
+- Squarer, flatter controls throughout: buttons, toggles, fields, cards, menus and sheets share the same small corner radius. Colours are unchanged, in both the dark and the light theme.
+- Proper SVG icons everywhere instead of text symbols: rotate, turn round, mirror, duplicate, delete, edit, split, turn left and right, shapes, arrows and the right-click menus.
+- Messages appear over the drawing, clear of the bars and the title block.
+- Selecting a piece of furniture, a door or a pillar brings its settings to the top of the side panel.
+- README brought up to date with everything the app does.
+
 ## 2.4.1 — 13 Nov 2026
 - Lengths are whole millimetres everywhere: typing, the drawing, the panel, the laser and the DXF (e.g. 5994, not 5994.4).
 - Slimmer buttons and pills throughout: less padding, smaller header icons and step dock, so more fits on screen.
