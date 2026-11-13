@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.5 — 14 Nov 2026
+- Laboratory menu (and the hold / right-click menu on the plan): Landscape or Portrait turns the whole laboratory 90° so its long side runs across or up. Walls, furniture, services, markup and north turn with it, and the DXF comes out the same way. Undo turns it back.
+
 ## 3.3.4 — 14 Nov 2026
 - Room dimensions: the ruler button under the zoom buttons shows or hides them on screen. Your choice is remembered on this device; the DXF always keeps them.
 
