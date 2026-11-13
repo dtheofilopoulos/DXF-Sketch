@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.11.2 — 13 Nov 2026
+- Leaner screen, nothing shown twice. The header shows the hospital name only. The panel head is one line: the walls and whether the room is closed, plus the step arrows. Step headings, which repeated the active tab, are gone. The title block on the plan is gone too; the laboratory button, header and status bar already show its contents.
+- Type and size buttons (door, window, pillar, shaft, services, furniture) are only on the toolbar above the plan; the panel keeps the measurements. The furniture toolbar is grouped, and fades at the edge when more items scroll. On narrower screens it no longer runs under the zoom buttons.
+- Rooms named “Laboratory 1, 2…” from before laboratories existed are renamed “Room 1, 2…”. Rooms you named yourself are untouched.
+
 ## 2.11.1 — 13 Nov 2026
 - Doors, windows and passages snap tight against a pillar or shaft in the same wall, when you tap them in, sketch them or drag them. While dragging, the chip says “against the pillar”, or how far the opening is from the nearest pillar or shaft.
 
