@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.3 — 14 Nov 2026
+- Services on the plan are drawn with finer lines: the water, drain and air circles are thinner and a little smaller, with lighter letters, and the socket and RJ45 symbols are thinner too. In Pillars and Services the distances to the corners show only for the one you select, instead of for every item at once.
+
 ## 3.3.2 — 14 Nov 2026
 - Opening the app, a project or a room starts with nothing selected: no wall is highlighted and no selection bar shows until you tap something.
 
