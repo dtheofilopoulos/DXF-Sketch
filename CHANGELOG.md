@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 — 13 Nov 2026
+- Pillars and shafts snap: near a wall they sit against it, near a corner they sit in the corner, and while dragging they line up with other pillars (column grids) with a red guide line and a tag saying what they snapped to.
+- A pillar or shaft touching a wall runs through it to the outer wall line and the wall stops at its sides; in a corner it cuts both walls and fills the outer corner. Same in the DXF, hatches included.
+- Doors, windows and points snap to the centre of their wall while you drag them, with a guide and a CENTRED tag.
+- Site keypad: on the iPad the measurement bubble has its own big number pad instead of the iPad keyboard, with + and − to add up part lengths and Next → to go wall to wall. It flips below the number when there is no room above. Settings › Number keypad: Auto, Always or Off.
+- Duplicate room (Room step): copies a room with all its doors, windows, pillars and points and places it beside the original, for identical labs side by side.
+- Everything since 1.12: walls locked after the Walls step, tap-to-change doors and windows, pillars anywhere, Ortho 90°, tappable corner angles, rooms that always close, and reliable updates.
+
 ## 1.14.1 — 13 Nov 2026
 - Fixed: tapping Update could reload the same old version. Updates now always download fresh files from GitHub, bypassing the browser's and GitHub's caches.
 - If an update still does not take, the app clears its offline copy and reloads the newest version by itself; your projects stay. A message confirms the new version.
