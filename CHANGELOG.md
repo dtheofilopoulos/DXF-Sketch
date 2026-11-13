@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.10 — 14 Nov 2026
+- DXF: the plan's bottom-left corner (the outer faces of the walls) is placed on 0,0,0, so every export starts from the origin in AutoCAD. Dimensions sit outside it, as usual.
+
 ## 3.3.9 — 14 Nov 2026
 - DXF: furniture and equipment come out in colour 125 on layer Room: your blocks, benches, equipment outlines and their names (block contents are ByBlock, so they take the colour). Services stay on layer Room in their own colours.
 
