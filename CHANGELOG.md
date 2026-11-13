@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.3 — 14 Nov 2026
+- Updates live only in About: Check for updates and Update now are there and nowhere else. When a new version is ready, the About button (ⓘ) shows a blue dot instead of the orange Update button in the header; Settings no longer has update buttons.
+- The File button in the header is labelled File, so New, Open, Save, Save as and Save to a file are easy to find. On a phone it stays a folder icon.
+
 ## 3.4.2 — 14 Nov 2026
 - About › Check for updates: asks GitHub for the latest version and says whether you have it; when there is a newer one, Update now installs it.
 

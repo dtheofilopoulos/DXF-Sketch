@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.4.2-0696d7)
+![version](https://img.shields.io/badge/version-3.4.3-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -25,7 +25,7 @@ then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: In
 
 Also:
 
-- **File menu** (folder button): new, open, open a project file, save, save as, save to a file, recent projects; ⌘/Ctrl+S, ⌘/Ctrl+Shift+S, ⌘/Ctrl+O.
+- **File menu** (File button in the header): new, open, open a project file, save, save as, save to a file, recent projects; ⌘/Ctrl+S, ⌘/Ctrl+Shift+S, ⌘/Ctrl+O.
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
 - **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings › Live links.
 - **Photos and notes** per room, kept on the device and carried in the project file and site report.
@@ -46,7 +46,7 @@ Also:
 1. Change the version in `VERSION`, `index.html` (`APP_VERSION`), `sw.js` (`VERSION`) and `laptop/DXF-Sketch.py` (`VERSION`).
 2. Copy the same page to `laptop/DXF-Sketch.html`.
 3. Add a section for the new version at the top of `CHANGELOG.md`.
-4. Commit and push. GitHub Pages publishes the app within a minute (open apps offer *Reload to update* in Settings), and the Release workflow publishes a GitHub Release with the notes and two zips.
+4. Commit and push. GitHub Pages publishes the app within a minute (open apps show a dot on About; About › Check for updates installs it), and the Release workflow publishes a GitHub Release with the notes and two zips.
 
 Author: Dionysios Theofilopoulos · d.theofilopoulos@gmail.com
 
