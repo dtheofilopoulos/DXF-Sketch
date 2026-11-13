@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.5.2 — 14 Nov 2026
+- “Bench drawers” is now “Bench drawer”, like the other items (one piece each).
+
 ## 3.5.1 — 14 Nov 2026
 - Quit (the power button at the right end of the header; in the File menu on a phone): saves everything, sends the live link its last changes, and closes the app, or, where the browser won't let a page close itself, says everything is saved and it is safe to close, with Back to work.
 
