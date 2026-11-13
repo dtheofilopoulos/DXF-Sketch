@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.5 — 14 Nov 2026
+- PCs, sinks and everything else on a bench line up with one another along their centres, so they sit in one row, and no longer snap edge to edge against each other. The guide line and “aligned” show while you drag. Along the bench they go wherever you put them. Benches, cabinets and equipment on the floor still snap flush as before.
+
 ## 3.0.4 — 14 Nov 2026
 - The scale bar lies flat again, in the bottom-right corner of the drawing. On narrow screens it moves up above the selection bar when the two would overlap.
 
