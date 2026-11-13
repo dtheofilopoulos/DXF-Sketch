@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0 — 14 Nov 2026
+- Live link (Projects › Live link): a short link that always opens the latest version of the project, instead of a copy frozen when you sent it. The project is kept in a secret Gist on your GitHub account; this iPad sends your changes a few seconds after you make them (or as soon as it is back online). Photos stay on the iPad. Whoever opens the link gets the current version each time; they can keep their own copy with “Keep as my own project”. Switch the link off at any time.
+- Settings › Live links: paste a GitHub token (classic, with only the gist box ticked) once to turn live links on. It stays on this device.
+
 ## 3.0.6 — 14 Nov 2026
 - The blue measurement pills that appear when you select something (and the corner angles in Walls) are smaller and keep the same small size at any zoom. Zoom in to tap and edit them.
 
