@@ -1,14 +1,14 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.2.0-0696d7)
+![version](https://img.shields.io/badge/version-3.2.1-0696d7)
 
-Measure rooms on site with a laser meter, type the readings in on the iPad step by step, and open the result in AutoCAD:
+Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
 `STYLE[inch]` dimension style, the Area label block, doors and windows, pillars and shafts, sockets, water and
 drain points, and furniture as your own blocks.
 
-**Open on the iPad:** https://dtheofilopoulos.github.io/DXF-Sketch/
-then Share › Add to Home Screen. After the first visit it works with no signal and keeps everything on the iPad.
+**Open on any device:** https://dtheofilopoulos.github.io/DXF-Sketch/
+then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: Install app). After the first visit it works with no signal and keeps everything on that device.
 
 ## What it does
 
@@ -45,7 +45,7 @@ Also:
 1. Change the version in `VERSION`, `index.html` (`APP_VERSION`), `sw.js` (`VERSION`) and `laptop/DXF-Sketch.py` (`VERSION`).
 2. Copy the same page to `laptop/DXF-Sketch.html`.
 3. Add a section for the new version at the top of `CHANGELOG.md`.
-4. Commit and push. GitHub Pages publishes the app within a minute (iPads offer *Reload to update* in Settings), and the Release workflow publishes a GitHub Release with the notes and two zips.
+4. Commit and push. GitHub Pages publishes the app within a minute (open apps offer *Reload to update* in Settings), and the Release workflow publishes a GitHub Release with the notes and two zips.
 
 Author: Dionysios Theofilopoulos · d.theofilopoulos@gmail.com
 

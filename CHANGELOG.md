@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.2.1 — 14 Nov 2026
+- Wording: the app talks about “this device” instead of the iPad, since it runs on any tablet, phone or computer.
+
 ## 3.2.0 — 14 Nov 2026
 - Furniture and Equipment are now two steps. Furniture: benches, bench cabinets and drawers, wall cabinets, chairs, stools and bins. Equipment: PCs, printers, sinks, sample racks and centrifuges on the benches, then reverse osmosis and your named equipment (fridge, freezer, fume hood, safety cabinet, analyzer). Each step's toolbar shows only its own items, the step tabs count them separately, and tapping a piece on the plan opens the step it belongs to. Keys 1–8 jump to the steps.
 - Share (the share button in the header): type an email address and choose Only this person (a link of their own, which you can switch off on its own) or Anyone with the link. Mail opens with the message ready. Shared with lists every address you sent it to, with Copy link and Switch off.
@@ -7,7 +10,7 @@
 - The side panel stays open while you place a bench or equipment, so you can set its size.
 
 ## 3.1.0 — 14 Nov 2026
-- Live link (Projects › Live link): a short link that always opens the latest version of the project, instead of a copy frozen when you sent it. The project is kept in a secret Gist on your GitHub account; this iPad sends your changes a few seconds after you make them (or as soon as it is back online). Photos stay on the iPad. Whoever opens the link gets the current version each time; they can keep their own copy with “Keep as my own project”. Switch the link off at any time.
+- Live link (Projects › Live link): a short link that always opens the latest version of the project, instead of a copy frozen when you sent it. The project is kept in a secret Gist on your GitHub account; this device sends your changes a few seconds after you make them (or as soon as it is back online). Photos stay on this device. Whoever opens the link gets the current version each time; they can keep their own copy with “Keep as my own project”. Switch the link off at any time.
 - Settings › Live links: paste a GitHub token (classic, with only the gist box ticked) once to turn live links on. It stays on this device.
 
 ## 3.0.6 — 14 Nov 2026
