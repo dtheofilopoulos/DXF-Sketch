@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.10.0 — 13 Nov 2026
+- Sketch on the grid and it becomes the real thing: in Walls a line becomes walls (straightened, square corners snapped, closed if you end near the start; drawn away from the room it starts a new room); in Openings a line along a wall becomes a door, window or passage of that width; in Pillars an outline becomes a pillar or shaft (round if you draw a circle); in Sockets a mark becomes the point. Then tap the numbers to set exact sizes.
+- Apple Pencil sketches by default; the new sketch button lets a finger or mouse do the same; the highlighter button keeps lines as markup.
+- Side panel narrower and denser, and it can be hidden for a full-width drawing.
+- Projects are named after the hospital or laboratory; exported files end with the date, e.g. Gen._Hosp._Kavala_20261113.dxf.
+- "Room Height" used throughout.
+
 ## 1.9.0 — 13 Nov 2026
 - Every step reworked to be shorter and tap-first: one line of guidance, the fields that matter on top, typed positions folded away under "Or type the position", and a list of what is already in the room.
 - Room: project name and usual height in one compact line once set; names, Room#, height and walls side by side; the position of a second room folded away.
