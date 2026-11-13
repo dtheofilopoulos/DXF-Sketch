@@ -1,8 +1,8 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-2.8.2-0696d7)
+![version](https://img.shields.io/badge/version-2.8.3-0696d7)
 
-Measure rooms on site with a laser meter, enter them on the iPad step by step, and open the result in AutoCAD:
+Measure rooms on site with a laser meter, type the readings in on the iPad step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
 `STYLE[inch]` dimension style, the Area label block, doors and windows, pillars and shafts, sockets, water and
 drain points, and furniture as your own blocks.
@@ -24,9 +24,6 @@ then Share › Add to Home Screen. After the first visit it works with no signal
 
 Also:
 
-- **Bosch laser meter over Bluetooth** (GLM 50 C / 100 C): each measurement goes into the length you are editing,
-  or the next wall when you walk a room. Needs Web Bluetooth: Chrome on Windows or Android, or the free
-  *Bluefy* browser on the iPad (Safari cannot use Bluetooth).
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
 - **Photos and notes** per room, kept on the device and carried in the project file and site report.
 - Light and dark themes, undo and redo, several projects per device, screen stays on while you work.

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.8.3 — 13 Nov 2026
+- Removed the Bosch laser meter (Bluetooth) connection: the laser button, its Settings section and the shortcut in the measurement bubble are gone. Type or use the number keypad for readings.
+
 ## 2.8.2 — 13 Nov 2026
 - Double doors can have unequal leaves: select the door and tap either leaf's width on the drawing, use Leaves on its bar, or type both in the panel. The two always fill the clear width between the frames.
 - Each leaf swings at its own size, on screen and in the DXF, and the door's tag reads e.g. D 1600 (1000+500) when the leaves differ.
