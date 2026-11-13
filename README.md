@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-2.0.0-0696d7)
+![version](https://img.shields.io/badge/version-2.0.1-0696d7)
 
 Measure rooms on site, enter them on the iPad step by step, and export an AutoCAD DXF
 (AutoCAD 2018 format, millimetres, 1:1) with your layers, hatched walls, the Area label block,

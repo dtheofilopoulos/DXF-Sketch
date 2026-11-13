@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.1 — 13 Nov 2026
+- Room Height is now an attribute of the room block (tag HEIGHT, e.g. "H = 2.70 m") next to the Greek and English names, Room# and area, instead of separate text. It follows the block when you move it in AutoCAD and can be edited with the other attributes.
+
 ## 2.0.0 — 13 Nov 2026
 - Pillars and shafts snap: near a wall they sit against it, near a corner they sit in the corner, and while dragging they line up with other pillars (column grids) with a red guide line and a tag saying what they snapped to.
 - A pillar or shaft touching a wall runs through it to the outer wall line and the wall stops at its sides; in a corner it cuts both walls and fills the outer corner. Same in the DXF, hatches included.
