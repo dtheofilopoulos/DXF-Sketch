@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.4 — 14 Nov 2026
+- The scale bar lies flat again, in the bottom-right corner of the drawing. On narrow screens it moves up above the selection bar when the two would overlap.
+
 ## 3.0.3 — 14 Nov 2026
 - Room dimensions and the room name are smaller, sit closer to the walls and are fainter. They now keep the same small size on screen at any zoom, instead of growing as you zoom in.
 - Fitting the plan no longer leaves an empty band at the top for the scale bar, which now sits on the right.
