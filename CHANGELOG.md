@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.7.0 — 13 Nov 2026
+- Numbers-only keypad for every number field on the iPad (lengths, angles, sizes, distances), not only in the measurement bubble: digits, + and − for adding up parts, ′ and ″ in imperial, Next to move to the following field and Done. Settings › Number keypad switches it on, off or automatic.
+- Editing a segment of a wall's dimension chain now changes only that segment: the openings, pillars, points and furniture after it move along, the wall-to-wall total grows or shrinks to match, and the other walls adjust so the room stays closed.
+- Windows and passages can have a frame too (none unless you set one); doors keep 50 mm unless changed. Frame is on every opening's bar and in the panel.
+- Pillars and shafts that run into a wall show and take their size to the outer wall line, so the numbers match what is drawn and exported.
+- Bench cabinets, drawers and everything on a bench snap to every edge of the bench: its ends, its back and its front.
+- Tap to edit whatever is selected: a piece of furniture shows its distances to both corners, its distance off the wall and its width and depth on the drawing; a pillar shows its width and depth. Tap any number to change it.
+- Whatever you place by tapping (opening, pillar, socket or point) is selected straight away, ready to adjust.
+
 ## 2.6.0 — 13 Nov 2026
 - Walls with doors, windows or passages now show a chain of segment dimensions: corner → door, door width, door → window, window width, … → corner. Tap any segment to change it: a gap moves the next opening, a width resizes that opening, the last gap moves the last opening. Save → jumps to the next segment.
 - The wall-to-wall dimension stays as a second row further out, on the drawing and in the DXF; overall room dimensions move one row further still.
