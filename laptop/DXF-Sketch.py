@@ -29,7 +29,7 @@ UI_FILE = HERE / "DXF-Sketch.html"
 OUT_DIR = HERE / "Sketches"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "2.5.1"
+VERSION = "2.5.2"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────

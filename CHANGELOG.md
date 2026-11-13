@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2 — 13 Nov 2026
+- New rooms are called Laboratory 1, Laboratory 2 and so on, and the header button reads + Laboratory.
+- In projects you already have, rooms still carrying the old default name (Room 1, Room 2…) become Laboratory 1, Laboratory 2…; names you typed yourself are left alone.
+
 ## 2.5.1 — 13 Nov 2026
 - Buttons follow the Shui pattern: pill-shaped, with the primary action filled in the app's blue and secondary actions as flat grey pills without an outline.
 - Form fields are filled grey with a thin underline that turns blue while you type, instead of outlined boxes.
