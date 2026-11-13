@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.2 — 13 Nov 2026
+- Double doors can have unequal leaves: select the door and tap either leaf's width on the drawing, use Leaves on its bar, or type both in the panel. The two always fill the clear width between the frames.
+- Each leaf swings at its own size, on screen and in the DXF, and the door's tag reads e.g. D 1600 (1000+500) when the leaves differ.
+
 ## 2.8.1 — 13 Nov 2026
 - Pillars and shafts show their real, room-side size everywhere: on the selection bar, in the panel and when you tap their numbers, exactly what you measure on site. Snapping to a wall still draws them on to the outer wall line; that part is not counted in their size.
 - Every pillar and shaft has its size written on it in the drawing (e.g. 400×400, Ø300), on the part that stands in the room.
