@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.4.1 — 14 Nov 2026
+- Services are named Electrical outlets (1P, 1P UPS, 3P UPS) and Network outlets (RJ45) instead of sockets, everywhere: the toolbar (grouped electrical · network · water, drain and air), the panel, the colour key, the room schedule, the CSV and the site report. Your AutoCAD block names are unchanged.
+
 ## 3.4.0 — 14 Nov 2026
 - File menu on the folder button in the header: New project, Open…, Open a project file…, Save, Save as… (asks for a name), Save to a file, and your five most recent projects. On a keyboard: ⌘/Ctrl+S saves, ⌘/Ctrl+Shift+S saves as, ⌘/Ctrl+O opens. In Projects, Save as copy is now Save as… and asks for the name.
 
