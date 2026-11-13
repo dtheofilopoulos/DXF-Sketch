@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.1 — 14 Nov 2026
+- Tapping a PC, sink or other piece shows only the measurements that matter: the gap to its nearest neighbour on each side (PC to PC, sink to PC, cabinet to cabinet, or a pillar, door or corner when nothing is closer), on one line just in front of the piece. Tap a gap to type it. Fixed-size blocks no longer show their own width and depth, and an Equipment item shows its size on the plan only when there is room for it.
+- In Openings, Pillars, Services and Furniture the side panel hides itself while nothing is selected and comes back when you select something. The drawing keeps its scale and stays where it was. The panel button at the top left shows it on demand.
+- Corner letters (A, B, C…) are small and quiet; they show as tags only in Walls.
+- Room names on the plan are smaller and never wider than the room; other rooms in the laboratory are fainter.
+- Room dimensions are fainter outside Walls and Openings, so they sit behind the work.
+- The scale bar is on the right, under the compass.
+
 ## 3.0.0 — 13 Nov 2026
 - New layout. The laboratory and the room are two dropdowns at the top. The room dropdown lists the laboratory's rooms with their areas, and adds, duplicates, renames or deletes a room. The row of room buttons is gone.
 - On iPad landscape and larger screens the steps are a rail down the left (Room, Walls, Openings, Pillars, Services, Furniture, Export), so the drawing gets the full height. In portrait they stay as a compact row.
