@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.3.0 — 13 Nov 2026
+- Photos per room: in Notes, Add photo opens the iPad camera (or pick from Photos). Photos are kept on the device, tagged with the selected wall, and travel in the project file and the site report.
+- Site report (Export step): one HTML page with the plan, a room schedule (area, perimeter, height, volume, doors, windows, sockets, UPS, RJ45, water, drain), project and room notes, wall lengths and photos. Open it and print to PDF, or send it as is.
+- Room schedule (CSV) for Excel: one row per room with the same figures, in your units.
+- Export step shows total floor area, rooms closed and volume at a glance.
+- Walking a room: a prompt on the drawing shows the next wall, the turn at its corner and the gap back to corner A; with the laser connected, each measurement fills the wall and moves on.
+- The screen stays on while you work (Settings › Screen), so the iPad does not lock between measurements.
+- The laser reading popup sits lower, clear of the title block.
+
 ## 2.2.0 — 13 Nov 2026
 - Wall dimensions in the DXF are now real AutoCAD dimensions on the Room Dimensions layer, in your STYLE[inch] dimension style (mm with inches in brackets, e.g. 5830 [229,5"], 70 closed arrows, 50 text), 500 mm outside the wall like your drawings. Rooms that are not a plain rectangle also get overall length and width one row further out.
 - Text in the DXF defaults to 50 (was 100), matching your dimension text.
