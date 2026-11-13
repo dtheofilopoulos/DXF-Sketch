@@ -1,0 +1,59 @@
+# Publishes a GitHub Release whenever VERSION holds a number that has no release yet.
+# Release notes come from that version's section in CHANGELOG.md; the zip holds the whole app.
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version
+        id: v
+        run: echo "version=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if this version is already released
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "v${{ steps.v.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Notes from CHANGELOG.md
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          awk -v v="${{ steps.v.outputs.version }}" '
+            $0 ~ "^## " v " " {on=1; next}
+            on && /^## / {exit}
+            on {print}
+          ' CHANGELOG.md > notes.md
+          printf '\n**Open on the iPad:** https://dtheofilopoulos.github.io/DXF-Sketch/\n' >> notes.md
+          cat notes.md
+
+      - name: Package
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          V="${{ steps.v.outputs.version }}"
+          zip -r "DXF-Sketch-$V.zip" index.html sw.js manifest.webmanifest .nojekyll icons laptop README.md CHANGELOG.md VERSION
+          (cd laptop && zip -r "../DXF-Sketch-laptop-$V.zip" DXF-Sketch.py DXF-Sketch.html)
+
+      - name: Create release
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V="${{ steps.v.outputs.version }}"
+          gh release create "v$V" "DXF-Sketch-$V.zip" "DXF-Sketch-laptop-$V.zip" \
+            --title "DXF Sketch $V" --notes-file notes.md --target "${{ github.sha }}" --latest

@@ -24,6 +24,7 @@ everything on the iPad.
 
 1. Change the version in `VERSION`, `index.html` (`APP_VERSION`), `sw.js` (`VERSION`) and `laptop/DXF-Sketch.py` (`VERSION`).
 2. Copy the same page to `laptop/DXF-Sketch.html`.
-3. Commit and push. GitHub Pages publishes it within a minute; iPads offer *Reload to update* in Settings.
+3. Add a section for the new version at the top of `CHANGELOG.md`.
+4. Commit and push. GitHub Pages publishes the app within a minute (iPads offer *Reload to update* in Settings), and the Release workflow publishes a GitHub Release with the notes and two zips.
 
 Sora font: SIL Open Font License 1.1.
