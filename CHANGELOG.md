@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.0 — 14 Nov 2026
+- 3D: a Walls switch at the top. Low cuts every wall (and pillar) at 1.1 m, like a plan you can walk round; Cut away lowers only the walls between you and the room, as before; Full height shows the room as built. Your choice is remembered.
+- 3D looks better: a soft background, a 1 m grid on the floors, soft shadows under furniture and pillars, the plan floating on a gentle shadow, and softer light from above. The side panel steps aside in 3D, the model fills more of the screen, and things behind a full-height wall no longer show through it.
+- Share: the email box suggests name.surname@provider.com.
+
 ## 3.2.2 — 14 Nov 2026
 - Shared with now starts with the owner (you, with your GitHub name). Whoever opens a shared link sees the owner at the top of Share, with a green dot while the owner has the project open.
 
