@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.7 — 14 Nov 2026
+- The compass only shows where north is; it no longer offers to turn the plan (“Turn the plan so north is up” is gone). The landscape / portrait button now first squares up a laboratory that was left turned by a few degrees, so its walls run straight across and up the screen; tap it again to switch between landscape and portrait.
+
 ## 3.3.6 — 14 Nov 2026
 - Landscape / portrait button on the right toolbar, under the zoom buttons. It shows which way the laboratory lies; one tap turns the whole laboratory 90° the other way, whether or not north has been set. North turns with it, so it keeps pointing the right way.
 
