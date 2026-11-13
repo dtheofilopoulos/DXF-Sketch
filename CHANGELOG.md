@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.4 — 14 Nov 2026
+- Room dimensions: the ruler button under the zoom buttons shows or hides them on screen. Your choice is remembered on this device; the DXF always keeps them.
+
 ## 3.3.3 — 14 Nov 2026
 - Services on the plan are drawn with finer lines: the water, drain and air circles are thinner and a little smaller, with lighter letters, and the socket and RJ45 symbols are thinner too. In Pillars and Services the distances to the corners show only for the one you select, instead of for every item at once.
 

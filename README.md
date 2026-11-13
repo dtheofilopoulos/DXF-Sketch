@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.3.3-0696d7)
+![version](https://img.shields.io/badge/version-3.3.4-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
