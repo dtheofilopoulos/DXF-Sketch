@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.8.0 — 13 Nov 2026
+- The Area outline and the room area leave out pillars and shafts: a pillar against a wall or in a corner cuts a notch into the Area polyline, one standing free becomes a separate ring, and the AREA attribute, the drawing, the room schedule and the site report all show the net floor area.
+- Tool palette on the drawing: Openings, Pillars & shafts, Sockets & water and Furniture show their choices across the top of the plan (type, common sizes, every furniture item). Pick one and tap where it goes, without going through the side panel.
+- One Export: the blue Export DXF button in the header is gone; export from the Export step.
+- Cleaner step navigation: back and next arrows sit in the side panel's head next to the step name, and the bar at the foot of the panel is gone.
+- Pinch to zoom keeps the spot between your fingers under them and follows them as they move; the page itself no longer zooms in Safari.
+- Settings and About: the header stays put while the content scrolls under it, sections are grouped more clearly, and What's new shows the current version open with earlier ones folded away.
+- Light theme: toggles, buttons, fields and icons have stronger edges and darker text, so they stand out from the background.
+- Projects › Send a copy as a link: the project travels inside the link (photos excepted); whoever opens it gets their own copy.
+- Messages appear at the foot of the drawing, clear of the palette and the title block.
+
 ## 2.7.0 — 13 Nov 2026
 - Numbers-only keypad for every number field on the iPad (lengths, angles, sizes, distances), not only in the measurement bubble: digits, + and − for adding up parts, ′ and ″ in imperial, Next to move to the following field and Done. Settings › Number keypad switches it on, off or automatic.
 - Editing a segment of a wall's dimension chain now changes only that segment: the openings, pillars, points and furniture after it move along, the wall-to-wall total grows or shrinks to match, and the other walls adjust so the room stays closed.
