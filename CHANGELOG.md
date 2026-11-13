@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.14.0 — 13 Nov 2026
+- Rooms never keep a gap: change a length, an angle, insert or delete a wall in a closed room and it closes again on its own. The walls that change least are adjusted (e.g. lengthen one side and the opposite side follows), and the message names them. Undo puts them back.
+- If an adjustment would distort the room, the last wall is turned and stretched to meet corner A instead.
+- Walking a room wall by wall: when the end lands within 150 mm (or 2% of the perimeter) of corner A, the last wall snaps shut and the message says by how much.
+
 ## 1.13.0 — 13 Nov 2026
 - Corner angles in the Walls step: every corner shows its angle on the drawing; tap it (or the ∠ buttons on a selected wall) and type any angle, e.g. 108° or 120° for polygon rooms.
 - A closed room stays closed when you change an angle: two of the walls after it stretch to fit, every angle you set is kept, and the message names the walls that changed. Undo puts them back.
