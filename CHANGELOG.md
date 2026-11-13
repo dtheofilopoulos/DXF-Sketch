@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0.0 — 13 Nov 2026
+- New layout. The laboratory and the room are two dropdowns at the top. The room dropdown lists the laboratory's rooms with their areas, and adds, duplicates, renames or deletes a room. The row of room buttons is gone.
+- On iPad landscape and larger screens the steps are a rail down the left (Room, Walls, Openings, Pillars, Services, Furniture, Export), so the drawing gets the full height. In portrait they stay as a compact row.
+- One appearance button (sun / moon) instead of two. The header shows the hospital only.
+- Room dimensions on screen are smaller again and sit closer to the walls.
+- PCs, sinks and everything else can be dragged at any time, also while you are still placing items, and also by their size labels when selected. A tap still places or edits. While dragging, an item lines up centre to centre with the other PCs, sinks and equipment (“aligned”, with a guide line) and sits flush against its neighbour (“lined up”).
+- Benches are drawn underneath what stands on them, so a bench added last no longer covers the PCs and sinks.
+- A long item such as a bench can no longer jump onto a wall shorter than itself while you drag it.
+- Reverse osmosis: your Osmosis block, under Equipment in Furniture. It is placed against a wall like the rest and exported as the block on the Room layer.
+
 ## 2.12.0 — 13 Nov 2026
 - Furniture on screen is drawn from your own AutoCAD blocks (PC, printer, sink, cabinets, drawers, chairs, stool, rack, centrifuge, bin), placed exactly as in the DXF. A bench's name sits along its front edge, clear of what stands on it.
 - A wall shared with a room next door is dimensioned once, not once from each room.
