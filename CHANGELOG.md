@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.0 — 13 Nov 2026
+- New step 6, Furniture: benches at any length and depth (presets, or one tap for a bench along a whole wall), bench cabinets and drawers, wall cabinets, sinks, PCs, printers, sample racks, centrifuges, office chairs and stools, biohazard bins, and named equipment (fridge, freezer −80 °C, fume hood, biosafety cabinet, analyzer, water system, or your own name and size). Export is now step 7.
+- Pick an item and tap where it goes: against a wall, on the floor or on top of a bench. Keep tapping to add more. Items stand with their back to the nearest wall, snap into corners and line up end to end with their neighbour; chairs and stools go in front of the bench.
+- Tap an item to select it: rotate 90°, turn it round, duplicate it next to itself, delete it, or set its size and its distances from the corner and the wall. Drag to move it; hold or right-click for the same menu.
+- In the DXF they arrive as your own blocks from the Kavala drawing (Bench Cabinet, Bench Drawer, Wall Cabinet, Sink, PC, Printer, Office Chair, Office Stool, Rack Samples, Centrifuge (M), Bin (Biohazard)) on the Room layer. Benches become one block per size (e.g. Bench 1800x700) on the Benches layer; equipment is an outline with its name on Laboratory Equipment.
+- Room schedule and site report list the furniture and equipment in each room, with the total bench length.
+- Lengths shown while dragging follow the Units setting.
+
 ## 2.3.0 — 13 Nov 2026
 - Photos per room: in Notes, Add photo opens the iPad camera (or pick from Photos). Photos are kept on the device, tagged with the selected wall, and travel in the project file and the site report.
 - Site report (Export step): one HTML page with the plan, a room schedule (area, perimeter, height, volume, doors, windows, sockets, UPS, RJ45, water, drain), project and room notes, wall lengths and photos. Open it and print to PDF, or send it as is.
