@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.6.0 — 13 Nov 2026
+- Walls with doors, windows or passages now show a chain of segment dimensions: corner → door, door width, door → window, window width, … → corner. Tap any segment to change it: a gap moves the next opening, a width resizes that opening, the last gap moves the last opening. Save → jumps to the next segment.
+- The wall-to-wall dimension stays as a second row further out, on the drawing and in the DXF; overall room dimensions move one row further still.
+- In the DXF the chain and the wall-to-wall row are real dimensions in your STYLE[inch], like the Kavala drawing.
+- Door frame: every door has a frame on each side, 50 mm unless you change it. Set it in the Door panel (with the clear width shown), with Frame on the door's bar, or by tapping the frame value next to the selected door. The jambs are drawn and exported, and the leaf and swing fill the clear width between them.
+- Fixed: switching between door, window and passage before placing one no longer carries the previous width over.
+
 ## 2.5.2 — 13 Nov 2026
 - New rooms are called Laboratory 1, Laboratory 2 and so on, and the header button reads + Laboratory.
 - In projects you already have, rooms still carrying the old default name (Room 1, Room 2…) become Laboratory 1, Laboratory 2…; names you typed yourself are left alone.
