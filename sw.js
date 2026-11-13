@@ -1,5 +1,5 @@
 // DXF Sketch offline cache. VERSION must match APP_VERSION in index.html; bump both on every release.
-const VERSION = '1.8.0';
+const VERSION = '1.9.0';
 const CACHE = 'dxf-sketch-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 const EXTRA = ['./icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
@@ -19,7 +19,9 @@ self.addEventListener('message', e => { if (e.data === 'skip') self.skipWaiting(
 // new service worker (Settings › Check for updates / Reload to update).
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  const url = new URL(req.url);
+  if (req.method !== 'GET' || url.origin !== location.origin) return;
+  if (url.pathname.endsWith('/VERSION')) return;   // always ask the network: this is how the app spots a new release
   e.respondWith(
     caches.open(CACHE).then(c => c.match(req, {ignoreSearch: true}).then(hit => {
       if (hit) return hit;

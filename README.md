@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.8.0-0696d7)
+![version](https://img.shields.io/badge/version-1.9.0-0696d7)
 
 Measure rooms on site, enter them on the iPad step by step, and export an AutoCAD DXF
 (AutoCAD 2018 format, millimetres, 1:1) with your layers, hatched walls, the Area label block,
@@ -26,5 +26,7 @@ everything on the iPad.
 2. Copy the same page to `laptop/DXF-Sketch.html`.
 3. Add a section for the new version at the top of `CHANGELOG.md`.
 4. Commit and push. GitHub Pages publishes the app within a minute (iPads offer *Reload to update* in Settings), and the Release workflow publishes a GitHub Release with the notes and two zips.
+
+Author: Dionysios Theofilopoulos · d.theofilopoulos@gmail.com
 
 Sora font: SIL Open Font License 1.1.

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""DXF Sketch - site measurements to an AutoCAD DXF, entered step by step in a web UI.
+"""DXF Sketch Companion Tool - site measurements to an AutoCAD DXF, entered step by step in a web UI.
+
+Author: Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>
 
 Optional laptop helper: the page DXF-Sketch.html also works on its own (github.io).
 This script serves it on the local network and adds a 'Save to laptop' button that
@@ -27,7 +29,8 @@ UI_FILE = HERE / "DXF-Sketch.html"
 OUT_DIR = HERE / "Sketches"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "1.8.0"
+VERSION = "1.9.0"
+AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
 TEAL, ORANGE, RED = "\033[38;2;0;153;153m", "\033[38;2;236;102;2m", "\033[38;2;217;58;58m"
@@ -86,6 +89,7 @@ def banner(port: int, ips: list) -> None:
     print()
     print(top("Running"))
     print(kv("Version", f"{VERSION}  ·  {SCRIPT}"))
+    print(kv("Author", AUTHOR))
     print(kv("This laptop", f"http://{LOCAL_HOST}:{port}", BOLD))
     if ips:
         for n, ip in enumerate(ips):

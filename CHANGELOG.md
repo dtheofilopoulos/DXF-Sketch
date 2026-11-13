@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.0 — 13 Nov 2026
+- Every step reworked to be shorter and tap-first: one line of guidance, the fields that matter on top, typed positions folded away under "Or type the position", and a list of what is already in the room.
+- Room: project name and usual height in one compact line once set; names, Room#, height and walls side by side; the position of a second room folded away.
+- Export: a checklist of rooms (closed or not, area, height, contents) above one Export DXF button; drawing options folded away.
+- An orange **Update** button appears in the header when a newer release is on GitHub; one tap updates the app and keeps your projects.
+- New About page (tap the version in the header, or Settings › About) with how it works and this changelog.
+- Author shown in the About page, the laptop window and the README.
+
 ## 1.8.0 — 13 Nov 2026
 - Tap any wall length on the drawing to change it in place; Enter saves and moves on to the next wall, so a whole room can be corrected without leaving the plan.
 - Doors, windows, pillars and points show their distances to both corners on the drawing; tap either number to set it exactly.
