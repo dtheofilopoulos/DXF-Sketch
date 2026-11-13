@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.5.1 — 13 Nov 2026
+- Buttons follow the Shui pattern: pill-shaped, with the primary action filled in the app's blue and secondary actions as flat grey pills without an outline.
+- Form fields are filled grey with a thin underline that turns blue while you type, instead of outlined boxes.
+- Cards, lists, folding sections and summary tiles are flat with small corners on the panel background.
+- Colours are unchanged in both themes, and nothing carries third-party branding.
+
 ## 2.5.0 — 13 Nov 2026
 - New layout: a flat application bar on top, the seven steps as a navigation bar of tabs under it (the active step underlined), the side panel and the drawing flush against each other with thin separators, and a status bar at the bottom with coordinates, legend, grid and units. The floating step dock is gone, so the drawing has more room.
 - Squarer, flatter controls throughout: buttons, toggles, fields, cards, menus and sheets share the same small corner radius. Colours are unchanged, in both the dark and the light theme.
