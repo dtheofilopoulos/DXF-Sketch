@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.2 — 14 Nov 2026
+- The scale bar stands upright under the compass, the same width as the buttons above it, so it takes no room from the drawing.
+
 ## 3.0.1 — 14 Nov 2026
 - Tapping a PC, sink or other piece shows only the measurements that matter: the gap to its nearest neighbour on each side (PC to PC, sink to PC, cabinet to cabinet, or a pillar, door or corner when nothing is closer), on one line just in front of the piece. Tap a gap to type it. Fixed-size blocks no longer show their own width and depth, and an Equipment item shows its size on the plan only when there is room for it.
 - In Openings, Pillars, Services and Furniture the side panel hides itself while nothing is selected and comes back when you select something. The drawing keeps its scale and stays where it was. The panel button at the top left shows it on demand.
