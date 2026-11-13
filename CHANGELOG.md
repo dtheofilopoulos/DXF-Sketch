@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.4.0 — 14 Nov 2026
+- File menu on the folder button in the header: New project, Open…, Open a project file…, Save, Save as… (asks for a name), Save to a file, and your five most recent projects. On a keyboard: ⌘/Ctrl+S saves, ⌘/Ctrl+Shift+S saves as, ⌘/Ctrl+O opens. In Projects, Save as copy is now Save as… and asks for the name.
+
 ## 3.3.11 — 14 Nov 2026
 - About has its own button in the header (ⓘ, next to Settings) and is no longer inside Settings. The author's name, © Dionysios Theofilopoulos, is shown at the bottom right of the screen; tap it for About.
 - README: services described as they are now (sockets 1P, 1P UPS, 3P UPS, RJ45, water supply, drain and air supply, each in its own colour).
