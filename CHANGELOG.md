@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0 — 13 Nov 2026
+- Wall dimensions in the DXF are now real AutoCAD dimensions on the Room Dimensions layer, in your STYLE[inch] dimension style (mm with inches in brackets, e.g. 5830 [229,5"], 70 closed arrows, 50 text), 500 mm outside the wall like your drawings. Rooms that are not a plain rectangle also get overall length and width one row further out.
+- Text in the DXF defaults to 50 (was 100), matching your dimension text.
+- Units in Settings: Metric (mm, m²) by default, or Imperial (feet and inches, ft²). Type 12'6", 12'-6 1/2" or 150"; sums work too. Drawings are still stored and exported 1:1 in millimetres.
+- The drawing shows wall lengths as dimension lines outside the walls, as in AutoCAD, with smaller lettering.
+- Bosch laser meter: the new laser button connects a GLM 50 C / 100 C over Bluetooth. Press measure on the meter and the value goes into the measurement bubble, the length field you are in, or the next wall when you walk a room. Works in Chrome (Windows, Android) and in the Bluefy browser on iPad; Safari cannot use Bluetooth, and Settings explains what to do.
+- The DXF header now names an existing dimension style (it pointed to ISO-25, which was not in the file).
+
 ## 2.1.0 — 13 Nov 2026
 - Right-click (or hold a finger on the iPad) anything on the drawing for a menu of what you can do with it:
   - a wall: change its length or corner angle; add a door, window, passage, pillar or socket right where you pressed; split it, insert a wall after it, or delete it;
