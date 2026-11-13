@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0 — 13 Nov 2026
+- Right-click (or hold a finger on the iPad) anything on the drawing for a menu of what you can do with it:
+  - a wall: change its length or corner angle; add a door, window, passage, pillar or socket right where you pressed; split it, insert a wall after it, or delete it;
+  - a door or window: double, opens out, flip the hinge, make it a door/window/passage, centre it on the wall, duplicate, delete;
+  - a pillar or shaft: round, pillar ⇄ shaft, against the wall, centre on the wall, duplicate, delete; a socket or water point: duplicate, delete;
+  - inside a room: add a pillar or shaft there, zoom to the room, rename, duplicate, rotate, mirror, delete; empty space: fit, zoom, add a room, markup pen, share picture, export DXF.
+- Double-tap or double-click: a door flips between opening in and out; a wall opens its length in the Walls step (from any step, without adding anything); inside a room zooms to that room; empty space fits the whole plan; a window, pillar or point opens its menu.
+- Keyboard: Delete removes the selected door, window, pillar or point; Esc deselects or closes the menu; arrow keys move through the menu.
+
 ## 2.0.1 — 13 Nov 2026
 - Room Height is now an attribute of the room block (tag HEIGHT, e.g. "H = 2.70 m") next to the Greek and English names, Room# and area, instead of separate text. It follows the block when you move it in AutoCAD and can be edited with the other attributes.
 
