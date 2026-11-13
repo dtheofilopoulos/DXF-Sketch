@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.12.0 — 13 Nov 2026
+- Furniture on screen is drawn from your own AutoCAD blocks (PC, printer, sink, cabinets, drawers, chairs, stool, rack, centrifuge, bin), placed exactly as in the DXF. A bench's name sits along its front edge, clear of what stands on it.
+- A wall shared with a room next door is dimensioned once, not once from each room.
+- Rooms next door join up: where their walls meet, the outline runs straight through with no seam, on screen and in the DXF.
+- Smaller wall dimensions on screen, set closer to the wall, so they cover less of the plan.
+- DXF: all furniture and services are on the Room layer. The contents of your furniture and service blocks are on layer 0, so they follow the Room layer. Service blocks keep their own colours (sockets yellow, RJ45 cyan, water blue, drain red, air orange). Equipment outlines and names, and bench blocks, are on Room too. Benches against a wall are turned so their name reads upright.
+
 ## 2.11.4 — 13 Nov 2026
 - Room next door always grows outwards from the selected wall, in line with it, whichever way the first room was drawn (clockwise, counter-clockwise or mirrored). Before, a room drawn clockwise could get its neighbour placed inside it.
 
