@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.1.0-0696d7)
+![version](https://img.shields.io/badge/version-3.2.0-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on the iPad step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -19,13 +19,14 @@ then Share › Add to Home Screen. After the first visit it works with no signal
 | 3 Openings | Doors, windows and passages: tap the wall, drag to place, tap a distance to set it |
 | 4 Pillars & shafts | Anywhere in the room; they snap to walls, corners and each other |
 | 5 Sockets & water | Socket 1P, 1P UPS, 3P UPS, RJ45, water and drain, exported as your blocks |
-| 6 Furniture | Benches at any size, cabinets, drawers, sinks, PCs, printers, chairs and named equipment |
-| 7 Export | DXF, a printable site report (plan, room schedule, notes, photos), a plan picture and a room schedule (CSV) |
+| 6 Furniture | Benches at any size, bench cabinets and drawers, wall cabinets, chairs, stools, bins |
+| 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment |
+| 8 Export | DXF, a printable site report (plan, room schedule, notes, photos), a plan picture and a room schedule (CSV) |
 
 Also:
 
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
-- **Live link** (Projects): a short link that always opens the latest version, kept in a secret GitHub Gist. Needs a GitHub token with the gist scope in Settings › Live links.
+- **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings › Live links.
 - **Photos and notes** per room, kept on the device and carried in the project file and site report.
 - Light and dark themes, undo and redo, several projects per device, screen stays on while you work.
 
