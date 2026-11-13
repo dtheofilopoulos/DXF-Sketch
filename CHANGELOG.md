@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.0 — 13 Nov 2026
+- Tap any wall length on the drawing to change it in place; Enter saves and moves on to the next wall, so a whole room can be corrected without leaving the plan.
+- Doors, windows, pillars and points show their distances to both corners on the drawing; tap either number to set it exactly.
+
 ## 1.7.1 — 13 Nov 2026
 - A graphic scale bar on the drawing shows what 500 mm, 1 m or 2 m look like; it adapts as you zoom.
 - Removed the drawing-scale option: AutoCAD stays 1:1 in millimetres. Text height (100) and hatch scale (14) are fixed defaults you can change on Export.
