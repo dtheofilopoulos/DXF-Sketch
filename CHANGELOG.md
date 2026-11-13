@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.9 — 14 Nov 2026
+- DXF: furniture and equipment come out in colour 125 on layer Room: your blocks, benches, equipment outlines and their names (block contents are ByBlock, so they take the colour). Services stay on layer Room in their own colours.
+
 ## 3.3.8 — 14 Nov 2026
 - North from the first wall: as soon as a room has its first wall (and north isn't set yet), Walls offers Set north from wall A–B. Stand at corner A, look along the wall towards B (as when you measure it), hold the device flat with its top pointing that way, and tap Read the compass. Not now hides it for that laboratory; the north arrow can still be set or dragged later.
 
