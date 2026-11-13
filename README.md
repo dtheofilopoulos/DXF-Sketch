@@ -1,11 +1,11 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.3.10-0696d7)
+![version](https://img.shields.io/badge/version-3.3.11-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
-`STYLE[inch]` dimension style, the Area label block, doors and windows, pillars and shafts, sockets, water and
-drain points, and furniture as your own blocks.
+`STYLE[inch]` dimension style, the Area label block, doors and windows, pillars and shafts, services (sockets, RJ45,
+water, drain and air) and furniture and equipment as your own blocks. The plan's bottom-left corner sits on 0,0,0.
 
 **Open on any device:** https://dtheofilopoulos.github.io/DXF-Sketch/
 then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: Install app). After the first visit it works with no signal and keeps everything on that device.
@@ -18,9 +18,9 @@ then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: In
 | 2 Walls | Sketch with Apple Pencil, start from a rectangle or an L, or walk the room wall by wall. Tap any length or corner angle to change it; rooms always stay closed |
 | 3 Openings | Doors, windows and passages: tap the wall, drag to place, tap a distance to set it |
 | 4 Pillars & shafts | Anywhere in the room; they snap to walls, corners and each other |
-| 5 Sockets & water | Socket 1P, 1P UPS, 3P UPS, RJ45, water and drain, exported as your blocks |
-| 6 Furniture | Benches at any size, bench cabinets and drawers, wall cabinets, chairs, stools, bins |
-| 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment |
+| 5 Services | Sockets 1P, 1P UPS and 3P UPS, RJ45, water supply, drain and air supply: tap the wall, a pillar or a shaft. Exported as your blocks on layer Room, each in its own colour (sockets yellow, RJ45 cyan, water blue, drain red, air orange) |
+| 6 Furniture | Benches at any size, bench cabinets and drawers, wall cabinets, chairs, stools, bins. On layer Room in colour 125 |
+| 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment. On layer Room in colour 125 |
 | 8 Export | DXF, a printable site report (plan, room schedule, notes, photos), a plan picture and a room schedule (CSV) |
 
 Also:
@@ -53,6 +53,6 @@ Sora font: SIL Open Font License 1.1.
 
 ## License
 
-Copyright © 2026 dtheofilopoulos. All rights reserved. You may use the published app and freely use everything you
+Copyright © 2026 Dionysios Theofilopoulos. All rights reserved. You may use the published app and freely use everything you
 make with it; copying, changing or redistributing the code, the AutoCAD blocks or the template needs permission.
 See [LICENSE](LICENSE).

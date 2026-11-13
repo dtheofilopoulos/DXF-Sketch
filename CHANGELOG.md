@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.11 — 14 Nov 2026
+- About has its own button in the header (ⓘ, next to Settings) and is no longer inside Settings. The author's name, © Dionysios Theofilopoulos, is shown at the bottom right of the screen; tap it for About.
+- README: services described as they are now (sockets 1P, 1P UPS, 3P UPS, RJ45, water supply, drain and air supply, each in its own colour).
+
 ## 3.3.10 — 14 Nov 2026
 - DXF: the plan's bottom-left corner (the outer faces of the walls) is placed on 0,0,0, so every export starts from the origin in AutoCAD. Dimensions sit outside it, as usual.
 
