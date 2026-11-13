@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.13.0 — 13 Nov 2026
+- Corner angles in the Walls step: every corner shows its angle on the drawing; tap it (or the ∠ buttons on a selected wall) and type any angle, e.g. 108° or 120° for polygon rooms.
+- A closed room stays closed when you change an angle: two of the walls after it stretch to fit, every angle you set is kept, and the message names the walls that changed. Undo puts them back.
+- The selected wall's bar shows its length and both corner angles as buttons, so a wall can be extended or angled in one tap.
+
 ## 1.12.0 — 13 Nov 2026
 - Walls are locked once you leave the Walls step: in Openings, Pillars and Sockets the wall lengths can no longer be changed by a stray tap; only doors, windows and passages cut them.
 - Tap a door or window to select it: a bar on the drawing switches Single/Double, opens In/Out and flips the hinge side, with Delete and Done. Changes apply at once and Undo takes them back.
