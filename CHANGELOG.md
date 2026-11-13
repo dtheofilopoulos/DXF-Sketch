@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.4.2 — 14 Nov 2026
+- About › Check for updates: asks GitHub for the latest version and says whether you have it; when there is a newer one, Update now installs it.
+
 ## 3.4.1 — 14 Nov 2026
 - Services are named Electrical outlets (1P, 1P UPS, 3P UPS) and Network outlets (RJ45) instead of sockets, everywhere: the toolbar (grouped electrical · network · water, drain and air), the panel, the colour key, the room schedule, the CSV and the site report. Your AutoCAD block names are unchanged.
 
