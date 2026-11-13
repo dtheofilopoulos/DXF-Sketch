@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.11.0 — 13 Nov 2026
+- Room Height defaults to 2700 mm for new projects.
+- Share plan picture: a clean PNG of the whole plan (no grid or helper marks) with the hospital or laboratory name, date and a scale bar, ready for email or WhatsApp.
+- Rotate a free room by 90° and mirror any closed room from the Walls step.
+- Export warns when two openings overlap on a wall, or an opening starts inside a corner.
+- The drawing shows the Greek room name and Room# with each room.
+
 ## 1.10.0 — 13 Nov 2026
 - Sketch on the grid and it becomes the real thing: in Walls a line becomes walls (straightened, square corners snapped, closed if you end near the start; drawn away from the room it starts a new room); in Openings a line along a wall becomes a door, window or passage of that width; in Pillars an outline becomes a pillar or shaft (round if you draw a circle); in Sockets a mark becomes the point. Then tap the numbers to set exact sizes.
 - Apple Pencil sketches by default; the new sketch button lets a finger or mouse do the same; the highlighter button keeps lines as markup.
