@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.5.0 — 14 Nov 2026
+- Room: the second name is “Name (other language)” instead of Greek, and the first is simply “Name”; the room schedule column follows. It still fills the same line of your Area label.
+- Header: New, Open, Save and Save as are buttons of their own (on a phone they stay in the File menu), and the buttons are grouped with dividers: undo and redo · new, open, save, save as · share and notes · appearance, About and Settings. Header icons are all the same size, the About ⓘ included. The laboratory and room selectors moved to a bar of their own just below the header. The toolbar on the right is grouped too: 3D · zoom · orientation and dimensions · sketch and markup.
+
 ## 3.4.3 — 14 Nov 2026
 - Updates live only in About: Check for updates and Update now are there and nowhere else. When a new version is ready, the About button (ⓘ) shows a blue dot instead of the orange Update button in the header; Settings no longer has update buttons.
 - The File button in the header is labelled File, so New, Open, Save, Save as and Save to a file are easy to find. On a phone it stays a folder icon.
