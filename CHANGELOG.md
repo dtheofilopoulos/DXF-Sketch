@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.1 — 13 Nov 2026
+- Lengths are whole millimetres everywhere: typing, the drawing, the panel, the laser and the DXF (e.g. 5994, not 5994.4).
+- Slimmer buttons and pills throughout: less padding, smaller header icons and step dock, so more fits on screen.
+- Fixed: the blue glow under selected buttons and room tabs was cut off at the edges of the panel and header. Selected items are now flat blue with a crisp edge.
+- Export step: Export DXF is a full-width button with Site report, Plan picture and Room schedule (CSV) neatly below it; the summary tiles no longer wrap or cut off.
+
 ## 2.4.0 — 13 Nov 2026
 - New step 6, Furniture: benches at any length and depth (presets, or one tap for a bench along a whole wall), bench cabinets and drawers, wall cabinets, sinks, PCs, printers, sample racks, centrifuges, office chairs and stools, biohazard bins, and named equipment (fridge, freezer −80 °C, fume hood, biosafety cabinet, analyzer, water system, or your own name and size). Export is now step 7.
 - Pick an item and tap where it goes: against a wall, on the floor or on top of a bench. Keep tapping to add more. Items stand with their back to the nearest wall, snap into corners and line up end to end with their neighbour; chairs and stools go in front of the bench.
