@@ -1,11 +1,12 @@
-// DXF Sketch offline cache. Bump VERSION with every release so iPads pick up the update.
-const VERSION = '1.1.1';
+// DXF Sketch offline cache. VERSION must match APP_VERSION in index.html; bump both on every release.
+const VERSION = '1.6.0';
 const CACHE = 'dxf-sketch-' + VERSION;
-const FILES = ['./', './index.html', './manifest.webmanifest',
-  './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
+const CORE = ['./', './index.html', './manifest.webmanifest'];
+const EXTRA = ['./icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE).then(() =>
+    Promise.all(EXTRA.map(u => c.add(u).catch(() => {}))))));   // a missing icon must not stop offline use
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()

@@ -1,11 +1,29 @@
-# DXF Sketch
+# DXF Sketch Companion Tool
 
-Step-by-step room measurement on the iPad, exported as an AutoCAD DXF (mm, 1:1).
+![version](https://img.shields.io/badge/version-1.6.0-0696d7)
 
-Open the GitHub Pages address in Safari on the iPad, then Share › Add to Home Screen.
-After the first visit it works with no signal; everything is stored on the device.
+Measure rooms on site, enter them on the iPad step by step, and export an AutoCAD DXF
+(AutoCAD 2018 format, millimetres, 1:1) with your layers, hatched walls, the Area label block,
+sockets, water and drain points.
 
-Files: `index.html` (the whole app), `sw.js` (offline cache — bump `VERSION` on every update),
-`manifest.webmanifest` and `icons/` (home-screen app).
+**Open on the iPad:** https://dtheofilopoulos.github.io/DXF-Sketch/
+then Share › Add to Home Screen. After the first visit it works with no signal and keeps
+everything on the iPad.
+
+## Files
+
+| File | What it is |
+|---|---|
+| `index.html` | The whole app |
+| `sw.js` | Offline cache: its `VERSION` must match `APP_VERSION` in `index.html` |
+| `manifest.webmanifest`, `icons/` | Home-screen app |
+| `laptop/DXF-Sketch.py` + `laptop/DXF-Sketch.html` | Optional laptop helper: serves the app on the local network and saves DXFs straight into a `Sketches` folder (`python DXF-Sketch.py`, opens http://dxf-sketch.localhost:8125) |
+| `VERSION`, `CHANGELOG.md` | Release number and history |
+
+## Releasing a new version
+
+1. Change the version in `VERSION`, `index.html` (`APP_VERSION`), `sw.js` (`VERSION`) and `laptop/DXF-Sketch.py` (`VERSION`).
+2. Copy the same page to `laptop/DXF-Sketch.html`.
+3. Commit and push. GitHub Pages publishes it within a minute; iPads offer *Reload to update* in Settings.
 
 Sora font: SIL Open Font License 1.1.
