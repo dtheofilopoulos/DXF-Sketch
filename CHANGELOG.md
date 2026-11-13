@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.11.4 — 13 Nov 2026
+- Room next door always grows outwards from the selected wall, in line with it, whichever way the first room was drawn (clockwise, counter-clockwise or mirrored). Before, a room drawn clockwise could get its neighbour placed inside it.
+
 ## 2.11.3 — 13 Nov 2026
 - + Room next door: select a wall (or long-press it) and add a room on its other side. The new room shares that wall, which is drawn once, and starts as a rectangle as long as the wall. Type its depth and you are done; edit or reshape it like any room.
 
