@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.1 — 13 Nov 2026
+- Sockets, water supply and drain points go on pillars and shafts too: in Sockets & water, tap a pillar or shaft and the point sits on its nearest face, facing out into the room; drag a point near a pillar or shaft and it snaps onto it. It moves with the pillar and exports on it in the DXF.
+- A point on a pillar shows its distances to both corners of that face; tap either to set it. Back to the wall on its bar puts it on the wall again.
+- Lock is the first button on the bar whenever you tap a wall, pillar or shaft, and it is also in the side panel (wall editor and pillar settings). Tapping a locked pillar or shaft says so.
+
 ## 2.9.0 — 13 Nov 2026
 - Lock walls, pillars and shafts once you are certain of them: Lock on the selected item's bar, or hold / right-click for the menu. Locked items show a small padlock and keep their size and position.
 - Nothing can change a locked item by accident: its numbers do not open for editing, a locked pillar or shaft cannot be dragged, and any change that would move or resize it (keeping a room rectangular, closing a room, deleting) is undone with a message saying which item is locked.
