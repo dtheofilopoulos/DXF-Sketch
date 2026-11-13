@@ -145,6 +145,14 @@ svg text{font-family:var(--sans);font-feature-settings:"tnum" 1;user-select:none
 #sheet .opt{border:1px solid var(--line);background:var(--surf2);border-radius:14px;padding:12px 14px;margin-bottom:8px}
 #sheet .opt p{margin:6px 0 0;color:var(--mut);font-size:13px}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
+/* graphic scale bar */
+#sbar{position:absolute;left:16px;bottom:24px;pointer-events:none;font:600 11px var(--sans);color:var(--ink);z-index:3;padding:8px 10px 6px;border-radius:12px;background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line2)}
+#sbar .sb{display:flex;height:7px;border:1.5px solid var(--ink);border-radius:1px}
+#sbar .sb i{flex:1}#sbar .sb i:nth-child(odd){background:var(--ink)}
+#sbar .lbl{position:relative;height:14px;margin-top:3px}
+#sbar .lbl span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+#sbar .lbl span:last-child{transform:translateX(-100%)}#sbar .lbl span:first-child{transform:none}
+@media(max-width:700px){#sbar{bottom:96px}}
 /* step dock on the drawing */
 #dock{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;
   background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);border:1px solid var(--line2);
@@ -205,7 +213,7 @@ textarea:focus{outline:none;border-color:var(--acc);background:var(--surf);box-s
   <section id="stage" class="stage">
     <div class="canvas"><svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg><div id="tb"></div>
       <div class="zoom"><button data-act="zin" aria-label="Zoom in" id="bzin"></button><button data-act="zout" aria-label="Zoom out" id="bzout"></button><button data-act="fit" aria-label="Zoom to fit" id="bfit"></button><button data-act="inkmode" aria-label="Draw markup" title="Draw with finger or mouse (Apple Pencil always draws)" id="bink"></button><button data-act="inkclear" aria-label="Clear markup" title="Clear markup" id="binkx" hidden></button></div>
-      <div id="wchip"></div><nav id="dock" aria-label="Steps"></nav></div>
+      <div id="sbar" aria-hidden="true"></div><div id="wchip"></div><nav id="dock" aria-label="Steps"></nav></div>
     <div id="legend" class="status"></div>
   </section>
 </main>
@@ -231,10 +239,8 @@ const LDEF={WALLS:'Walls',DOORS:'Doors',WINDOWS:'Windows',PASSAGES:'Passages',PI
 function layerCfg(p){const o={};Object.keys(LDEF).forEach(k=>{const c=(p.layers||{})[k]||{};
   o[k]={name:String(c.name||LDEF[k]).replace(/[<>\/\\":;?*|=,`]/g,'').trim()||LDEF[k],color:(c.color>=1&&c.color<=255)?Math.round(c.color):125};});return o;}
 function newProject(){return{name:'Site sketch',unit:'mm',scale:50,height:3000,rooms:[newRoom('Room 1')],opts:{dims:true,names:true,tags:true},layers:layerCfg({})}}
-const SCALES=[20,50,100,200];
-const plotScale=p=>p.scale>0?p.scale:50;
-const textH=p=>{const o=p.opts||{};return o.thUser>0?o.thUser:2.5*plotScale(p);};      // 2.5 mm on paper
-const hatchS=p=>{const o=p.opts||{};return o.hsUser>0?o.hsUser:+(14*plotScale(p)/50).toFixed(2);};  // your drawings use 14 at 1:50
+const textH=p=>{const o=p.opts||{};return o.thUser>0?o.thUser:100;};
+const hatchS=p=>{const o=p.opts||{};return o.hsUser>0?o.hsUser:14;};      // as in your drawings
 const roomH=(p,r)=>r.h>0?r.h:(p.height>0?p.height:3000);
 
 const MATK=m=>({masonry:1,concrete:1,light:1,none:1}[m]?m:'masonry');
@@ -430,7 +436,7 @@ if(typeof module!=='undefined'&&module.exports){module.exports={newProject,newRo
 if(typeof document==='undefined')return;
 
 /* ================= UI ================= */
-const APP_VERSION='1.7.0';   // keep in step with sw.js and DXF-Sketch.py
+const APP_VERSION='1.7.1';   // keep in step with sw.js and DXF-Sketch.py
 const KEY='dxf-sketch-project-v1';
 const IC=(d,extra)=>'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"'+(extra||'')+'>'+d+'</svg>';
 const ICONS={undo:IC('<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>'),redo:IC('<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>'),
@@ -488,7 +494,7 @@ function render(){
   const mc=document.querySelector('meta[name=theme-color]');if(mc)mc.setAttribute('content',S.theme==='light'?'#eceef2':'#15191f');
   $('bundo').disabled=!S.undo.length;$('bredo').disabled=!S.redo.length;
   $('psub').textContent=S.p.name+' · mm · 1:1';
-  $('tb').innerHTML='<div><b>'+esc(S.p.name)+'</b></div><div>Scale 1:'+plotScale(S.p)+' · mm · H '+(roomH(S.p,room())/1000).toFixed(2)+' m</div><div>'+new Date().toISOString().slice(0,10)+'</div>';
+  $('tb').innerHTML='<div><b>'+esc(S.p.name)+'</b></div><div>1:1 · mm · H '+(roomH(S.p,room())/1000).toFixed(2)+' m</div><div>'+new Date().toISOString().slice(0,10)+'</div>';
   $('rooms').innerHTML=S.p.rooms.map(r=>r.id===S.room?'<button class="pill sm on" data-act="room" data-v="'+r.id+'" style="padding-right:6px;display:inline-flex;align-items:center;gap:6px">'+esc(r.name)+'<span data-act="delroom" data-v="'+r.id+'" role="button" aria-label="Delete room '+esc(r.name)+'" title="Delete room" style="display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.22);font-size:13px;line-height:1">✕</span></button>':pill('room',r.id,esc(r.name),false,'sm')).join('')+'<button class="pill sm ghost" data-act="addroom">+ Room</button>';
   $('bink').classList.toggle('on',!!S.inkMode);$('binkx').hidden=!(S.p.ink&&S.p.ink.length);
   renderPanel();renderSketch();renderToast();if(S.sheet)renderSheet();noteBadge();
@@ -562,7 +568,7 @@ function renderDock(){const r=room(),lay=S.G.layouts[r.id],st=stepState(r,lay);
 function renderPanel(){
   const r=room(),lay=S.G.layouts[r.id];
   let h='<div class="phead"><div class="stp">Step '+S.step+' of 6 · '+STEPS[S.step-1]+'</div><div class="rn">'+esc(r.name)+(r.nameGr?' <span style="color:var(--mut);font-weight:500">· '+esc(r.nameGr)+'</span>':'')+'</div>'+
-    '<div class="rs">'+(r.num?'#'+esc(r.num)+' · ':'')+'1:'+plotScale(S.p)+' · H '+(roomH(S.p,r)/1000).toFixed(2)+' m · '+lay.walls.length+' walls'+(lay.closed?' · '+(lay.area/1e6).toFixed(1)+' m2':(lay.walls.length?' · open':''))+'</div></div>';
+    '<div class="rs">'+(r.num?'#'+esc(r.num)+' · ':'')+'H '+(roomH(S.p,r)/1000).toFixed(2)+' m · '+lay.walls.length+' walls'+(lay.closed?' · '+(lay.area/1e6).toFixed(1)+' m2':(lay.walls.length?' · open':''))+'</div></div>';
   h+='<div class="pbody'+(S._ls!==S.step?' enter':'')+'">';S._ls=S.step;
   if(S.err)h+='<div class="box err">'+esc(S.err)+'</div>';
   h+=[stepRoom,stepWalls,stepOpen,stepItems,stepPoints,stepExport][S.step-1](r,lay)+'</div>';
@@ -577,9 +583,8 @@ function stepRoom(r){
   const fresh=!S.p.rooms.some(x=>x.walls.length);
   let h='<div class="card" style="margin-bottom:16px"><label class="f" style="margin-top:2px">Project'+(fresh?' — set this up first':'')+'</label>'+
     field('Project name','<div class="row"><input type="text" data-c="proj.name" value="'+esc(S.p.name)+'"></div>')+
-    field('AutoCAD drawing scale','<div class="pills">'+SCALES.map(v=>pill('pscale',v,'1:'+v,plotScale(S.p)===v,'sm')).join('')+'</div>')+
     field('Usual room height',inp('data-c="proj.height"',fromMM(S.p.height>0?S.p.height:3000)))+
-    '<p class="hint" style="margin-top:8px">The drawing stays 1:1 in millimetres; the scale sets text height and hatch size so they plot right at 1:'+plotScale(S.p)+'.</p></div>';
+    '</div>';
   h+='<h2>Room</h2><p class="hint">Name the room and set its height and the usual wall thickness. You can change single walls later.</p>';
   h+=field('Room name (English)','<div class="row"><input type="text" data-c="room.name" value="'+esc(r.name)+'"></div>');
   h+=field('Room name (Greek)','<div class="row"><input type="text" data-c="room.nameGr" value="'+esc(r.nameGr||'')+'" placeholder="π.χ. Βιοχημικό"></div>');
@@ -719,9 +724,8 @@ function stepExport(){
   let h='<h2>Export</h2><p class="hint">AutoCAD 2018 DXF, drawn 1:1 in millimetres on your layers: walls, hatches, doors, windows, pillars, sockets and the Area label block on Room (colour 125); the room perimeter on Area (magenta, not plotted); lengths on Room Dimensions.</p>';
   h+=field('File name','<div class="row"><input type="text" data-c="proj.name" value="'+esc(S.p.name)+'"><span class="u">.dxf</span></div>');
   h+=field('Include as text','<div class="pills">'+pill('opt','dims','Wall lengths',o.dims,'sm')+pill('opt','tags','Opening sizes',o.tags,'sm')+'</div>');
-  h+=field('Drawing scale','<div class="pills">'+SCALES.map(v=>pill('pscale',v,'1:'+v,plotScale(S.p)===v,'sm')).join('')+'</div>');
-  h+=field('Text height (auto: 2.5 mm on paper)',inp('data-c="opt.th"',o.thUser>0?String(o.thUser):'',String(textH(S.p))));
-  h+=field('Hatch scale (auto from the drawing scale)',inp('data-c="opt.hs"',o.hsUser>0?String(o.hsUser):'',String(hatchS(S.p)),false));
+  h+=field('Text height',inp('data-c="opt.th"',o.thUser>0?String(o.thUser):'',String(textH(S.p))));
+  h+=field('Hatch scale',inp('data-c="opt.hs"',o.hsUser>0?String(o.hsUser):'',String(hatchS(S.p)),false));
   h+='<label class="f">Rooms</label>';
   h+='<ul class="list">'+S.p.rooms.map(r=>{const l=S.G.layouts[r.id];return '<li><div class="top"><span class="desc"><b>'+esc(r.name)+'</b> · '+r.walls.length+' walls · '+r.openings.length+' openings · '+r.items.length+' pillars/shafts · '+(r.points||[]).length+' points'+((r.notes||'').trim()?' · notes':'')+(l.closed?' · '+(l.area/1e6).toFixed(2)+' m²':'')+'</span></div></li>';}).join('')+'</ul>';
   if(S.G.warn.length)h+='<div class="box warn">'+S.G.warn.map(esc).join('<br>')+'</div>';
@@ -795,12 +799,17 @@ function renderSketch(){
   if(!G.bands.length)s+='<text x="'+(vb[0]+vb[2]/2)+'" y="'+(vb[1]+vb[3]/2)+'" font-size="'+(fs*1.1)+'" fill="'+T.hint+'" text-anchor="middle">Start in Walls: enter the first length</text>';
   const sw=curWall(r),si=sw?r.walls.indexOf(sw):-1;
   $('wchip').innerHTML=sw?'<div><b>'+corner(si)+'–'+corner(si+1)+'</b><span class="u">'+fromMM(sw.len)+' mm</span><button class="pill sm" data-act="wedit" data-v="'+sw.id+'">Edit</button><button class="pill sm" data-act="delwall" data-v="'+sw.id+'" style="color:var(--red);border-color:var(--red)">Delete</button></div>':'';
-  const el=$('svg');el.setAttribute('viewBox',vb.map(x=>+x.toFixed(1)).join(' '));el.innerHTML=s;
+  const el=$('svg');el.setAttribute('viewBox',vb.map(x=>+x.toFixed(1)).join(' '));el.innerHTML=s;scaleBar();
   $('legend').innerHTML='<span id="coord">X —  Y —</span><span><i style="border-color:'+RM+'"></i>Room (125)</span><span><i style="border-color:'+T.area+';border-top-width:1px"></i>Area (not plotted)</span><span><i style="border-color:'+T.sock+'"></i>Sockets</span><span><i style="border-color:'+T.plumb+'"></i>Plumbing</span><span><i style="border-color:'+T.ink+'"></i>Markup</span><span><i style="border-color:'+T.sel+';border-top-style:dashed"></i>Selected</span><span><i class="sq" style="background:'+T.grip+'"></i>Corner</span><span><i class="sq" style="background:'+T.hot+'"></i>Start (A)</span><span>Grid '+g1+' / '+g5+'</span>'+(S.step>=3&&S.step<=5?'<span style="color:var(--acct)">Tap a wall to place · drag to move</span>':'');
 }
 /* pan and zoom */
 const svgEl=$('svg'),ptrs=new Map();let moved=false,down=[0,0],zt=0;
-const setVB=v=>{S.view=v;svgEl.setAttribute('viewBox',v.map(x=>+x.toFixed(1)).join(' '));};
+function scaleBar(){const el=$('sbar');if(!el)return;const v=S.view||FIT,bb=svgEl.getBoundingClientRect();if(!bb.width||!v[2])return;
+  const k=Math.min(bb.width/v[2],bb.height/v[3]);                 // screen pixels per millimetre
+  const nice=[100,200,500,1000,2000,5000,10000,20000,50000];let len=nice[0];for(const n of nice){if(n*k<=170)len=n;}
+  const d=String(len)[0],segs=d==='2'?4:5,w=len*k,lab=v=>v>=1000?(+(v/1000).toFixed(2))+' m':v+' mm',mid=d!=='5';
+  el.innerHTML='<div class="sb" style="width:'+w.toFixed(1)+'px">'+'<i></i>'.repeat(segs)+'</div><div class="lbl" style="width:'+w.toFixed(1)+'px"><span style="left:0">0</span>'+(mid?'<span style="left:50%">'+(len/2>=1000?lab(len/2):String(len/2))+'</span>':'')+'<span style="left:100%">'+lab(len)+'</span></div>';}
+const setVB=v=>{S.view=v;svgEl.setAttribute('viewBox',v.map(x=>+x.toFixed(1)).join(' '));scaleBar();};
 function toWorld(cx,cy){const p=svgEl.createSVGPoint();p.x=cx;p.y=cy;const q=p.matrixTransform(svgEl.getScreenCTM().inverse());return[q.x,q.y];}
 function zoomAt(pt,k){const v=(S.view||FIT).slice(),nw=Math.min(Math.max(v[2]*k,300),FIT[2]*6);k=nw/v[2];setVB([pt[0]-(pt[0]-v[0])*k,pt[1]-(pt[1]-v[1])*k,v[2]*k,v[3]*k]);}
 svgEl.addEventListener('wheel',e=>{e.preventDefault();zoomAt(toWorld(e.clientX,e.clientY),e.deltaY>0?1.15:0.87);clearTimeout(zt);zt=setTimeout(renderSketch,180);},{passive:false});
@@ -923,7 +932,6 @@ const A={
       L=[[W,0],[D-cd,90],[cw,90],[cd,-90],[W-cw,90],[D,90]];}
     commit(()=>{r.walls=L.map(q=>({id:uid(),len:q[0],turn:q[1],t:null,m:null}));r.keepRect=sh==='rect';S.wall=r.walls[0].id;S.dShape={w:'',d:'',cw:'',cd:''};});
     S.msg=(sh==='L'?'L-shaped':'Rectangular')+' room created. Tap a wall to edit it, or go on to Openings.';render();},
-  pscale:v=>commit(()=>{S.p.scale=+v;}),
   inkmode:()=>{S.inkMode=!S.inkMode;S.msg=S.inkMode?'Markup on: draw with your finger or mouse. Tap the pen again to pan.':'Markup off. Apple Pencil still draws.';render();},
   inkclear:()=>{const n=(S.p.ink||[]).length;commit(()=>{S.p.ink=[];});S.toastUndo=true;S.msg='Cleared '+n+' markup stroke'+(n===1?'':'s')+'.';render();},
   addform:()=>{S.addOpen=true;render();const e=$('wlen');if(e)e.focus();},
@@ -1073,6 +1081,7 @@ document.addEventListener('change',e=>{
 });
 
 $('bundo').innerHTML=ICONS.undo;$('bredo').innerHTML=ICONS.redo;$('bexp').innerHTML=ICONS.dl+'<span>Export DXF</span>';$('bzin').innerHTML=ICONS.plus;$('bzout').innerHTML=ICONS.minus;$('bfit').innerHTML=ICONS.fit;
+window.addEventListener('resize',()=>{clearTimeout(S._rz);S._rz=setTimeout(renderSketch,120);});
 S.theme='dark';try{if(localStorage.getItem('dxf-sketch-theme')==='light')S.theme='light';}catch(e){}
 $('bset').innerHTML=ICONS.gear;$('bink').innerHTML=ICONS.pen;$('binkx').innerHTML=ICONS.trash;$('ver').textContent='v'+APP_VERSION;$('bproj').innerHTML=ICONS.folder;$('bnotes').innerHTML=ICONS.note+'<span class="badge" id="nbadge" hidden></span>';
 

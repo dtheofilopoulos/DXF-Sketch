@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1 — 13 Nov 2026
+- A graphic scale bar on the drawing shows what 500 mm, 1 m or 2 m look like; it adapts as you zoom.
+- Removed the drawing-scale option: AutoCAD stays 1:1 in millimetres. Text height (100) and hatch scale (14) are fixed defaults you can change on Export.
+
 ## 1.7.0 — 13 Nov 2026
 - The six steps now sit in a floating dock on the drawing: icons with a count or a tick, the current step expanded with its name. Keys 1–6 jump between steps.
 - Fit leaves room for the title block and the dock, so the plan is never hidden under them.
