@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.2 — 14 Nov 2026
+- Opening the app, a project or a room starts with nothing selected: no wall is highlighted and no selection bar shows until you tap something.
+
 ## 3.3.1 — 14 Nov 2026
 - Licence: DXF Sketch is now explicitly “all rights reserved”. You can use the app and everything you make with it freely; copying or changing the code, blocks or template needs permission. Shown in Settings, the README and LICENSE.
 
