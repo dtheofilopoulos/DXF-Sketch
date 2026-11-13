@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.0 — 13 Nov 2026
+- Walls are locked once you leave the Walls step: in Openings, Pillars and Sockets the wall lengths can no longer be changed by a stray tap; only doors, windows and passages cut them.
+- Tap a door or window to select it: a bar on the drawing switches Single/Double, opens In/Out and flips the hinge side, with Delete and Done. Changes apply at once and Undo takes them back.
+- Pillars and shafts go anywhere in a room: tap the floor or sketch the outline, drag them freely, and set their distance from the nearest wall by tapping the number.
+- A pillar or shaft against a wall runs through to the outer wall line; the wall hatch stops at its sides.
+- Ortho 90° is on by default: sketched walls square up and a sketched room closes with square corners; typed turns go back to 90° after each wall. Turn Ortho off in Walls for angled walls.
+- Closed rooms label their last wall D–A (not D–E).
+
 ## 1.11.0 — 13 Nov 2026
 - Room Height defaults to 2700 mm for new projects.
 - Share plan picture: a clean PNG of the whole plan (no grid or helper marks) with the hospital or laboratory name, date and a scale bar, ready for email or WhatsApp.

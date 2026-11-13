@@ -87,6 +87,8 @@ main{flex:1;display:grid;gap:14px;padding:14px 16px 18px;grid-template-columns:1
 #wchip>div{pointer-events:auto;display:flex;align-items:center;gap:6px;background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--line2);border-radius:999px;padding:5px 6px 5px 16px;box-shadow:var(--sh2);animation:pop .22s cubic-bezier(.2,.8,.2,1)}
 @keyframes pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
 #wchip b{font:700 14px var(--mono)}
+#wchip .vsep{width:1px;align-self:stretch;background:var(--line2);margin:3px 2px}
+#wchip>div{max-width:calc(100% - 8px);flex-wrap:wrap;justify-content:center}
 .status{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;justify-content:center;padding:10px 4px 0;font:12px var(--mono);color:var(--mut)}
 .status #coord{color:var(--ink);min-width:150px;text-align:left}
 .status i{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
@@ -301,7 +303,8 @@ const V={add:(a,b)=>[a[0]+b[0],a[1]+b[1]],sub:(a,b)=>[a[0]-b[0],a[1]-b[1]],mul:(
 const ang=v=>Math.atan2(v[1],v[0])/D2R;
 const norm180=a=>{a=((a+180)%360+360)%360-180;return a===-180?180:a};
 let uidN=0;const uid=()=>'i'+Date.now().toString(36)+(uidN++).toString(36);
-const corner=i=>String.fromCharCode(65+i%26)+(i>=26?Math.floor(i/26):'');
+let CW=0;   // walls in the current room when it is closed: the corner after the last wall is A again
+const corner=i=>{if(CW&&i===CW)i=0;return String.fromCharCode(65+i%26)+(i>=26?Math.floor(i/26):'');};
 
 function newRoom(name){return{id:uid(),name:name,nameGr:'',num:'',t:150,m:'masonry',walls:[],openings:[],items:[],points:[],place:{mode:'free',x:0,y:0,rot:0}}}
 const LDEF={WALLS:'Walls',DOORS:'Doors',WINDOWS:'Windows',PASSAGES:'Passages',PILLARS:'Pillars',SHAFTS:'Shafts',DIMENSIONS:'Dimensions','ROOM-NAMES':'Room names'};
@@ -415,6 +418,9 @@ function buildGeometry(p){
       }
       if(opts.tags)G.texts.push({p:WP(w,(u0+u1)/2,t+TH*1.1),text:tag,h:TH*0.8,rot:up(w.h)});
     }
+    // a pillar or shaft against a wall runs through it to the outer wall line, so the wall stops at its sides
+    for(const it of r.items){const w=lay.walls.find(x=>x.id===it.wall);if(!w||it.shape==='round'||it.off>=0.5||w.t<0.5)continue;
+      const u0=it.fromEnd?w.len-it.along-it.w:it.along;clips.push({w:w,u0:Math.max(0,u0),u1:Math.min(w.len,u0+it.w),t:w.t});}
   }
   for(const r of p.rooms){const lay=L[r.id];
     if(lay.closed){const pts=lay.pts.slice(0,-1);G.floors.push({room:r.id,pts:pts});
@@ -430,7 +436,7 @@ function buildGeometry(p){
       if(it.shape==='round'){const u=(it.fromEnd?w.len-it.along-it.w:it.along)+it.w/2,c=WP(w,u,-(it.off+it.w/2)),rad=it.w/2;
         G.circles.push({c:c,r:rad,layer:layer,kind:it.kind,m:m});G.hits.push({room:r.id,item:it.id,quad:[[c[0]-rad,c[1]-rad],[c[0]+rad,c[1]-rad],[c[0]+rad,c[1]+rad],[c[0]-rad,c[1]+rad]]});
         if(it.kind==='shaft'){const k=rad*Math.SQRT1_2;G.segs.push({a:V.add(c,[-k,-k]),b:V.add(c,[k,k]),layer:layer});G.segs.push({a:V.add(c,[-k,k]),b:V.add(c,[k,-k]),layer:layer});}
-      }else{const u0=it.fromEnd?w.len-it.along-it.w:it.along,u1=u0+it.w,v0=-it.off,v1=-(it.off+it.d);
+      }else{const u0=it.fromEnd?w.len-it.along-it.w:it.along,u1=u0+it.w,v0=it.off<0.5&&w.t>=0.5?w.t:-it.off,v1=-(it.off+it.d);
         const q=[WP(w,u0,v0),WP(w,u1,v0),WP(w,u1,v1),WP(w,u0,v1)];
         G.polys.push({pts:q,layer:layer,kind:it.kind,m:m});G.hits.push({room:r.id,item:it.id,quad:q});
         if(it.kind==='shaft'){G.segs.push({a:q[0],b:q[2],layer:layer});G.segs.push({a:q[1],b:q[3],layer:layer});}}
@@ -509,8 +515,8 @@ if(typeof module!=='undefined'&&module.exports){module.exports={newProject,newRo
 if(typeof document==='undefined')return;
 
 /* ================= UI ================= */
-const APP_VERSION='1.11.0';   // keep in step with sw.js and DXF-Sketch.py
-const CHANGES=[{"v": "1.11.0", "d": "13 Nov 2026", "items": ["Room Height defaults to 2700 mm for new projects.", "Share plan picture: a clean PNG of the whole plan (no grid or helper marks) with the hospital or laboratory name, date and a scale bar, ready for email or WhatsApp.", "Rotate a free room by 90° and mirror any closed room from the Walls step.", "Export warns when two openings overlap on a wall, or an opening starts inside a corner.", "The drawing shows the Greek room name and Room# with each room."]}, {"v": "1.10.0", "d": "13 Nov 2026", "items": ["Sketch on the grid and it becomes the real thing: in Walls a line becomes walls (straightened, square corners snapped, closed if you end near the start; drawn away from the room it starts a new room); in Openings a line along a wall becomes a door, window or passage of that width; in Pillars an outline becomes a pillar or shaft (round if you draw a circle); in Sockets a mark becomes the point. Then tap the numbers to set exact sizes.", "Apple Pencil sketches by default; the new sketch button lets a finger or mouse do the same; the highlighter button keeps lines as markup.", "Side panel narrower and denser, and it can be hidden for a full-width drawing.", "Projects are named after the hospital or laboratory; exported files end with the date, e.g. Gen._Hosp._Kavala_20261113.dxf.", "\"Room Height\" used throughout."]}, {"v": "1.9.0", "d": "13 Nov 2026", "items": ["Every step reworked to be shorter and tap-first: one line of guidance, the fields that matter on top, typed positions folded away under \"Or type the position\", and a list of what is already in the room.", "Room: project name and usual height in one compact line once set; names, Room#, height and walls side by side; the position of a second room folded away.", "Export: a checklist of rooms (closed or not, area, height, contents) above one Export DXF button; drawing options folded away.", "An orange Update button appears in the header when a newer release is on GitHub; one tap updates the app and keeps your projects.", "New About page (tap the version in the header, or Settings › About) with how it works and this changelog.", "Author shown in the About page, the laptop window and the README."]}, {"v": "1.8.0", "d": "13 Nov 2026", "items": ["Tap any wall length on the drawing to change it in place; Enter saves and moves on to the next wall, so a whole room can be corrected without leaving the plan.", "Doors, windows, pillars and points show their distances to both corners on the drawing; tap either number to set it exactly."]}, {"v": "1.7.1", "d": "13 Nov 2026", "items": ["A graphic scale bar on the drawing shows what 500 mm, 1 m or 2 m look like; it adapts as you zoom.", "Removed the drawing-scale option: AutoCAD stays 1:1 in millimetres. Text height (100) and hatch scale (14) are fixed defaults you can change on Export."]}, {"v": "1.7.0", "d": "13 Nov 2026", "items": ["The six steps now sit in a floating dock on the drawing: icons with a count or a tick, the current step expanded with its name. Keys 1–6 jump between steps.", "Fit leaves room for the title block and the dock, so the plan is never hidden under them."]}, {"v": "1.6.0", "d": "13 Nov 2026", "items": ["Apple Pencil draws markup on the plan; fingers still pan and zoom. A pen button lets a finger or mouse draw too. Markup goes to the DXF on a new Markup layer (colour 1).", "Rooms can start as a rectangle or an L with typed sizes; a rectangle stays rectangular when you change one side.", "Tap a wall in the drawing to drop a door, window, pillar or socket where you tapped, then drag it along the wall with live distances to both corners.", "Quick turn buttons (90°, 45°, straight) and common sizes for doors, windows and pillars; number fields accept sums such as 1200+850.", "Drawing scale (1:20 to 1:200) and room height set at the start; text height and hatch size follow the scale; the room height is written under the room label.", "Projects kept on the device: save, save as copy, open, delete; one-tap room delete with Undo; Close DXF Sketch stops the laptop helper.", "Notes per room and for the whole project.", "Settings: where it runs, offline status and updates, export with the share sheet or as a download.", "Laptop helper restyled, lists every address the iPad can try, explains what to do when the page keeps loading, and can add the Windows Firewall rule (`--firewall`)."]}, {"v": "1.1.0", "d": "13 Nov 2026", "items": ["First github.io release: works offline on the iPad, Sora font, dark and light AutoCAD-like themes."]}];
+const APP_VERSION='1.12.0';   // keep in step with sw.js and DXF-Sketch.py
+const CHANGES=[{"v": "1.12.0", "d": "13 Nov 2026", "items": ["Walls are locked once you leave the Walls step: in Openings, Pillars and Sockets the wall lengths can no longer be changed by a stray tap; only doors, windows and passages cut them.", "Tap a door or window to select it: a bar on the drawing switches Single/Double, opens In/Out and flips the hinge side, with Delete and Done. Changes apply at once and Undo takes them back.", "Pillars and shafts go anywhere in a room: tap the floor or sketch the outline, drag them freely, and set their distance from the nearest wall by tapping the number.", "A pillar or shaft against a wall runs through to the outer wall line; the wall hatch stops at its sides.", "Ortho 90° is on by default: sketched walls square up and a sketched room closes with square corners; typed turns go back to 90° after each wall. Turn Ortho off in Walls for angled walls.", "Closed rooms label their last wall D–A (not D–E)."]}, {"v": "1.11.0", "d": "13 Nov 2026", "items": ["Room Height defaults to 2700 mm for new projects.", "Share plan picture: a clean PNG of the whole plan (no grid or helper marks) with the hospital or laboratory name, date and a scale bar, ready for email or WhatsApp.", "Rotate a free room by 90° and mirror any closed room from the Walls step.", "Export warns when two openings overlap on a wall, or an opening starts inside a corner.", "The drawing shows the Greek room name and Room# with each room."]}, {"v": "1.10.0", "d": "13 Nov 2026", "items": ["Sketch on the grid and it becomes the real thing: in Walls a line becomes walls (straightened, square corners snapped, closed if you end near the start; drawn away from the room it starts a new room); in Openings a line along a wall becomes a door, window or passage of that width; in Pillars an outline becomes a pillar or shaft (round if you draw a circle); in Sockets a mark becomes the point. Then tap the numbers to set exact sizes.", "Apple Pencil sketches by default; the new sketch button lets a finger or mouse do the same; the highlighter button keeps lines as markup.", "Side panel narrower and denser, and it can be hidden for a full-width drawing.", "Projects are named after the hospital or laboratory; exported files end with the date, e.g. Gen._Hosp._Kavala_20261113.dxf.", "\"Room Height\" used throughout."]}, {"v": "1.9.0", "d": "13 Nov 2026", "items": ["Every step reworked to be shorter and tap-first: one line of guidance, the fields that matter on top, typed positions folded away under \"Or type the position\", and a list of what is already in the room.", "Room: project name and usual height in one compact line once set; names, Room#, height and walls side by side; the position of a second room folded away.", "Export: a checklist of rooms (closed or not, area, height, contents) above one Export DXF button; drawing options folded away.", "An orange Update button appears in the header when a newer release is on GitHub; one tap updates the app and keeps your projects.", "New About page (tap the version in the header, or Settings › About) with how it works and this changelog.", "Author shown in the About page, the laptop window and the README."]}, {"v": "1.8.0", "d": "13 Nov 2026", "items": ["Tap any wall length on the drawing to change it in place; Enter saves and moves on to the next wall, so a whole room can be corrected without leaving the plan.", "Doors, windows, pillars and points show their distances to both corners on the drawing; tap either number to set it exactly."]}, {"v": "1.7.1", "d": "13 Nov 2026", "items": ["A graphic scale bar on the drawing shows what 500 mm, 1 m or 2 m look like; it adapts as you zoom.", "Removed the drawing-scale option: AutoCAD stays 1:1 in millimetres. Text height (100) and hatch scale (14) are fixed defaults you can change on Export."]}, {"v": "1.7.0", "d": "13 Nov 2026", "items": ["The six steps now sit in a floating dock on the drawing: icons with a count or a tick, the current step expanded with its name. Keys 1–6 jump between steps.", "Fit leaves room for the title block and the dock, so the plan is never hidden under them."]}, {"v": "1.6.0", "d": "13 Nov 2026", "items": ["Apple Pencil draws markup on the plan; fingers still pan and zoom. A pen button lets a finger or mouse draw too. Markup goes to the DXF on a new Markup layer (colour 1).", "Rooms can start as a rectangle or an L with typed sizes; a rectangle stays rectangular when you change one side.", "Tap a wall in the drawing to drop a door, window, pillar or socket where you tapped, then drag it along the wall with live distances to both corners.", "Quick turn buttons (90°, 45°, straight) and common sizes for doors, windows and pillars; number fields accept sums such as 1200+850.", "Drawing scale (1:20 to 1:200) and room height set at the start; text height and hatch size follow the scale; the room height is written under the room label.", "Projects kept on the device: save, save as copy, open, delete; one-tap room delete with Undo; Close DXF Sketch stops the laptop helper.", "Notes per room and for the whole project.", "Settings: where it runs, offline status and updates, export with the share sheet or as a download.", "Laptop helper restyled, lists every address the iPad can try, explains what to do when the page keeps loading, and can add the Windows Firewall rule (`--firewall`)."]}, {"v": "1.1.0", "d": "13 Nov 2026", "items": ["First github.io release: works offline on the iPad, Sora font, dark and light AutoCAD-like themes."]}];
 const KEY='dxf-sketch-project-v1';
 const IC=(d,extra)=>'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"'+(extra||'')+'>'+d+'</svg>';
 const ICONS={undo:IC('<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>'),redo:IC('<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>'),
@@ -531,6 +537,7 @@ const freshOpen=()=>({type:'door',fromEnd:false,off:'',w:'',leaves:1,hinge:'star
 const freshItem=()=>({kind:'pillar',shape:'rect',fromEnd:false,along:'',off:'0',w:'',d:'',m:'concrete'});
 const freshPt=()=>({kind:'s1p',fromEnd:false,along:'',off:'0',val:''});
 S.dOpen=freshOpen();S.dItem=freshItem();S.dPt=freshPt();
+S.ortho=(()=>{try{return localStorage.getItem('dxf-sketch-ortho')!=='off';}catch(e){return true;}})();
 const matPills=(act,cur,pre)=>(pre||'')+Object.keys(MAT).map(k=>pill(act,k,MAT[k].label,cur===k,'sm')).join('');
 const num=s=>{const t=String(s==null?'':s).replace(/,/g,'.').replace(/\s+/g,'');
   if(/^[-+]?\d*\.?\d+([+\-*x×/][-+]?\d*\.?\d+)+$/.test(t)){try{const v=Function('"use strict";return ('+t.replace(/[x×]/g,'*')+')')();return isFinite(v)?v:NaN;}catch(e){return NaN;}}
@@ -563,6 +570,7 @@ const inp=(attr,val,ph,unit)=>'<div class="row"><input type="text" inputmode="de
 function render(){
   if(!S.p.rooms.find(r=>r.id===S.room))S.room=S.p.rooms[0].id;
   S.G=buildGeometry(S.p);
+  {const L0=S.G.layouts[S.room],r0=S.p.rooms.find(r=>r.id===S.room);CW=L0&&L0.closed&&r0?r0.walls.length:0;}
   document.documentElement.setAttribute('data-theme',S.theme);
   $('themes').innerHTML='<button data-act="theme" data-v="dark" class="'+(S.theme==='dark'?'on':'')+'" aria-label="Dark" title="Dark">'+ICONS.moon+'</button><button data-act="theme" data-v="light" class="'+(S.theme==='light'?'on':'')+'" aria-label="Light" title="Light">'+ICONS.sun+'</button>';
   const mc=document.querySelector('meta[name=theme-color]');if(mc)mc.setAttribute('content',S.theme==='light'?'#eceef2':'#15191f');
@@ -699,7 +707,7 @@ function stepOpen(r){
   let h='<h2>Doors, windows & passages</h2>';
   if(!r.walls.length)return h+'<p class="hint">Draw the walls first.</p><div class="actions"><button class="btn" data-act="step" data-v="2">Go to Walls</button></div>';
   const w=curWall(r),i=r.walls.indexOf(w),d=S.dOpen,A=corner(i),B=corner(i+1),ed=!!S.editOpen;
-  h+='<p class="hint">'+(ed?'Change it here, or drag it on the drawing.':'Pick the type, then <b>tap or sketch along the wall</b>; the sketch sets the width. Drag to move it, tap a distance to set it.')+'</p>';
+  h+='<p class="hint">'+(ed?'Changes apply at once. Drag it on the drawing to move it; Undo takes back any change.':'Pick the type, then <b>tap or sketch along the wall</b>; the sketch sets the width. Drag to move it, tap a distance to set it.')+'</p>';
   h+=field('Type','<div class="pills">'+pill('otype','door','Door',d.type==='door')+pill('otype','window','Window',d.type==='window')+pill('otype','passage','Passage',d.type==='passage')+'</div>');
   h+=field('Width',inp('data-d="dOpen.w" data-enter="addopen"',d.w,d.type==='door'?'900':d.type==='window'?'1200':'1000')+presetPills(d.type,'opreset',d.w));
   if(d.type==='door'){
@@ -717,10 +725,10 @@ function stepItems(r){
   let h='<h2>Pillars & shafts</h2>';
   if(!r.walls.length)return h+'<p class="hint">Draw the walls first.</p><div class="actions"><button class="btn" data-act="step" data-v="2">Go to Walls</button></div>';
   const w=curWall(r),i=r.walls.indexOf(w),d=S.dItem,A=corner(i),B=corner(i+1),rd=d.shape==='round',ed=!!S.editItem;
-  h+='<p class="hint">'+(ed?'Change it here, or drag it along the wall.':'Pick the type, then <b>sketch its outline</b> by the wall (or tap the wall). Drag to move it, tap a distance to set it.')+'</p>';
+  h+='<p class="hint">'+(ed?'Changes here, or drag it anywhere in the room.':'Pick the type, then <b>tap anywhere in the room</b> or sketch its outline. Drag it anywhere; it is measured from the nearest wall. Tap a distance to set it.')+'</p>';
   h+=field('Type','<div class="pills">'+pill('ikind','pillar','Pillar',d.kind==='pillar')+pill('ikind','shaft','Shaft',d.kind==='shaft')+'<span class="vsep"></span>'+pill('ishape','rect','▭',!rd,'sm')+pill('ishape','round','◯',rd,'sm')+'</div>');
   h+=field(rd?'Diameter':'Size',(rd?inp('data-d="dItem.w" data-enter="additem"',d.w,'400'):grid2(inp('data-d="dItem.w"',d.w,'width'),inp('data-d="dItem.d" data-enter="additem"',d.d,'depth')))+presetPills(d.kind,'ipreset',d.w));
-  h+=field('Distance from the wall',inp('data-d="dItem.off"',d.off,'0 = touching'));
+  h+=field('Distance from the wall',inp('data-d="dItem.off"',d.off,'0 = against the wall'));
   if(d.kind==='pillar')h+=field('Fill','<div class="pills">'+matPills('imat',d.m)+'</div>');
   const man=wallPicker(r)+grid2(field('From','<div class="pills">'+pill('ifrom','0','Corner '+A,!d.fromEnd,'sm')+pill('ifrom','1','Corner '+B,d.fromEnd,'sm')+'</div>'),field('Along the wall',inp('data-d="dItem.along" data-enter="additem"',d.along,'wall '+fromMM(w.len))))+
     '<div class="actions"><button class="btn" data-act="additem">'+(ed?'Save changes':'Add '+d.kind)+'</button>'+(ed?'<button class="btn txt" data-act="canceledit">Cancel</button>':'')+'</div>';
@@ -776,9 +784,10 @@ function stepShape(r){
   return h+'<div class="actions"><button class="btn" data-act="mkshape">Create room</button></div></div>';
 }
 function stepWalls(r,lay){
-  if(!r.walls.length&&(S.shape||'rect')!=='walk')return '<h2>Walls</h2><p class="hint">Sketch the room on the grid with Apple Pencil, start from a shape, or walk it wall by wall.</p>'+stepShape(r);
+  if(!r.walls.length&&(S.shape||'rect')!=='walk')return '<h2>Walls</h2><p class="hint">Sketch the room on the grid with Apple Pencil, start from a shape, or walk it wall by wall.</p>'+orthoPill()+stepShape(r);
   let h='<h2>Walls</h2><p class="hint">'+(lay.closed?'Closed. Tap any length on the drawing to correct it, or a wall below for more.':'Walk the inside face corner to corner, or <b>sketch the room</b> on the grid with Apple Pencil (or the sketch button). Turn 90 = square corner.')+'</p>';
   const d=S.dWall,n=r.walls.length,ins=S.insAfter&&r.walls.find(w=>w.id===S.insAfter),k=ins?r.walls.indexOf(ins)+1:n;
+  h+=orthoPill();
   if(!r.walls.length)h+=stepShape(r);
   if(r.walls.length===4&&lay.closed&&r.walls.every((w,i)=>!i||Math.abs(Math.abs(w.turn)-90)<0.01))h+='<div class="pills" style="margin:4px 0 10px">'+pill('keeprect','',r.keepRect?'✓ Keeping it rectangular':'Keep it rectangular',!!r.keepRect,'sm')+'</div>';
   if(lay.closed&&!ins&&!S.addOpen){h+='<div class="box ok"><b>Room closed.</b> Floor area '+(lay.area/1e6).toFixed(2)+' m²<div class="actions" style="margin-top:10px">'+(r.place.mode!=='attach'?'<button class="pill sm" data-act="rotroom">⟳ Rotate 90°</button>':'')+'<button class="pill sm" data-act="mirroom">⇋ Mirror</button><button class="pill sm" data-act="addform">+ Add another wall</button></div></div>';}
@@ -849,7 +858,7 @@ function renderSketch(){
   G.pieces.forEach(q=>{const d=q.rings.map(g=>'M'+g.map(P).join('L')+'Z').join('');
     s+='<path d="'+d+'" fill-rule="evenodd" fill="'+FILL[q.m]+'" fill-opacity="'+(q.m==='concrete'?.65:1)+'" stroke="'+RM+'" stroke-width="1.6" stroke-linejoin="miter"'+ns+'/>';});
   G.thin.forEach(t=>{s+=ln(t[0],t[1],RM,1,' stroke-dasharray="2 4" opacity=".6"');});
-  if(sel&&!S.clean){const q=G.bands.find(x=>x.wall===sel.id&&x.room===r.id);if(q)s+='<polygon points="'+q.quad.map(P).join(' ')+'" fill="'+T.selFill+'" stroke="'+T.sel+'" stroke-width="2" stroke-dasharray="7 4"'+ns+'/>';}
+  if(sel&&!S.clean&&!S.editOpen&&!S.editItem&&!S.editPt){const q=G.bands.find(x=>x.wall===sel.id&&x.room===r.id);if(q)s+='<polygon points="'+q.quad.map(P).join(' ')+'" fill="'+T.selFill+'" stroke="'+T.sel+'" stroke-width="2" stroke-dasharray="7 4"'+ns+'/>';}
   G.polys.forEach(q=>{s+='<polygon points="'+q.pts.map(P).join(' ')+'" fill="'+(q.kind==='shaft'?'none':FILL[q.m])+'" fill-opacity="'+(q.m==='concrete'&&q.kind!=='shaft'?.65:1)+'" stroke="'+RM+'" stroke-width="1.6"'+ns+'/>';});
   G.circles.forEach(c=>{s+='<circle cx="'+X(c.c)+'" cy="'+Y(c.c)+'" r="'+c.r.toFixed(1)+'" fill="'+(c.kind==='shaft'?'none':FILL[c.m])+'" fill-opacity="'+(c.m==='concrete'&&c.kind!=='shaft'?.65:1)+'" stroke="'+RM+'" stroke-width="1.6"'+ns+'/>';});
   G.segs.forEach(x=>{s+=ln(x.a,x.b,RM,1.4,x.dash?' stroke-dasharray="6 4"':'');});
@@ -864,7 +873,7 @@ function renderSketch(){
   S.p.rooms.forEach(rm=>{const l=G.layouts[rm.id];
     l.walls.forEach(wl=>{let rot=norm180(-wl.h);if(rot>90||rot<=-90)rot=norm180(rot+180);const q=WP(wl,wl.len/2,-fs*0.95),ed=S.dimEdit&&S.dimEdit.kind==='wall'&&S.dimEdit.id===wl.id;
       s+='<text x="'+X(q)+'" y="'+Y(q)+'" font-size="'+(fs*0.78).toFixed(1)+'" fill="'+(ed?T.sel:T.text)+'" font-weight="'+(ed?700:400)+'" text-anchor="middle" dominant-baseline="middle" transform="rotate('+rot.toFixed(2)+' '+X(q)+' '+Y(q)+')">'+fromMM(wl.len)+'</text>';
-      dims.push({kind:'wall',room:rm.id,id:wl.id,q:q,rot:rot,w:fs*3.2,h:fs*1.3});});
+      if(S.step===2)dims.push({kind:'wall',room:rm.id,id:wl.id,q:q,rot:rot,w:fs*3.2,h:fs*1.3});});
     if(l.closed){const c=l.centroid,cur=rm.id===r.id;
       s+='<text x="'+X(c)+'" y="'+Y(c)+'" font-size="'+fs.toFixed(1)+'" font-weight="'+(cur?700:400)+'" fill="'+T.text+'" text-anchor="middle" dominant-baseline="middle" data-room="'+rm.id+'">'+esc(rm.name)+'</text>'+
       (rm.nameGr?'<text x="'+X(c)+'" y="'+(Y(c)-fs*1.15).toFixed(1)+'" font-size="'+(fs*0.72).toFixed(1)+'" fill="'+T.text+'" text-anchor="middle" dominant-baseline="middle">'+esc(rm.nameGr)+'</text>':'')+'<text x="'+X(c)+'" y="'+(Y(c)+fs*1.3).toFixed(1)+'" font-size="'+(fs*0.7).toFixed(1)+'" fill="'+T.text+'" text-anchor="middle" dominant-baseline="middle">'+(rm.num?'#'+esc(rm.num)+' · ':'')+(l.area/1e6).toFixed(1)+' m2 · H '+(roomH(S.p,rm)/1000).toFixed(2)+' m</text>';}
@@ -890,15 +899,22 @@ function renderSketch(){
         '<text x="'+X(m)+'" y="'+Y(m)+'" font-size="'+(fs*0.62).toFixed(1)+'" font-weight="600" fill="'+(ed?'#fff':DC)+'" text-anchor="middle" dominant-baseline="central">'+Math.round(b-a)+'</text></g>';
       dims.push({kind:kind+side,room:r.id,id:id,q:m,rot:rot,w:fs*3,h:fs*1.2});};
     if(S.step===3)r.openings.forEach(o=>{const w=lw(o.wall);if(!w)return;const u0=o.fromEnd?w.len-o.off-o.w:o.off;run(w,0,u0,'open',o.id,'L');run(w,u0+o.w,w.len,'open',o.id,'R');});
-    if(S.step===4)r.items.forEach(o=>{const w=lw(o.wall);if(!w)return;const u0=o.fromEnd?w.len-o.along-o.w:o.along;run(w,0,u0,'item',o.id,'L');run(w,u0+o.w,w.len,'item',o.id,'R');});
+    if(S.step===4)r.items.forEach(o=>{const w=lw(o.wall);if(!w)return;const u0=o.fromEnd?w.len-o.along-o.w:o.along;run(w,0,u0,'item',o.id,'L');run(w,u0+o.w,w.len,'item',o.id,'R');
+      if(o.off>=1){const uc=u0+o.w/2,p0=WP(w,uc,0),p1=WP(w,uc,-o.off),m=WP(w,uc,-o.off/2);let rot=norm180(-w.h+90);if(rot>90||rot<=-90)rot=norm180(rot+180);
+        const ed=S.dimEdit&&S.dimEdit.id===o.id&&S.dimEdit.kind==='itemO';
+        s+=ln(p0,p1,DC,1,' opacity=".75"')+ln(WP(w,uc-tk,-o.off),WP(w,uc+tk,-o.off),DC,1);
+        s+='<g transform="rotate('+rot.toFixed(2)+' '+X(m)+' '+Y(m)+')"><rect x="'+(X(m)-fs*1.45)+'" y="'+(Y(m)-fs*0.5)+'" width="'+(fs*2.9)+'" height="'+(fs*1)+'" rx="'+(fs*0.5)+'" fill="'+(ed?DC:T.bg)+'" stroke="'+DC+'" stroke-width="1"'+ns+'/><text x="'+X(m)+'" y="'+Y(m)+'" font-size="'+(fs*0.62).toFixed(1)+'" font-weight="600" fill="'+(ed?'#fff':DC)+'" text-anchor="middle" dominant-baseline="central">'+Math.round(o.off)+'</text></g>';
+        dims.push({kind:'itemO',room:r.id,id:o.id,q:m,rot:rot,w:fs*3,h:fs*1.2});}});
     if(S.step===5)(r.points||[]).forEach(o=>{const w=lw(o.wall);if(!w)return;const u=o.fromEnd?w.len-o.along:o.along;run(w,0,u,'pt',o.id,'L');run(w,u,w.len,'pt',o.id,'R');});}
   dims.forEach(d=>{s+='<rect x="'+(X(d.q)-d.w/2)+'" y="'+(Y(d.q)-d.h/2)+'" width="'+d.w+'" height="'+d.h+'" fill="transparent" pointer-events="all" style="cursor:text" transform="rotate('+d.rot.toFixed(2)+' '+X(d.q)+' '+Y(d.q)+')" data-dim="'+d.kind+'" data-room="'+d.room+'" data-id="'+d.id+'"/>';});
   S._dims=dims;
   if(!G.bands.length)s+='<text x="'+(vb[0]+vb[2]/2)+'" y="'+(vb[1]+vb[3]/2)+'" font-size="'+(fs*1.1)+'" fill="'+T.hint+'" text-anchor="middle">Start in Walls: enter the first length</text>';
-  const sw=curWall(r),si=sw?r.walls.indexOf(sw):-1;
-  $('wchip').innerHTML=sw?'<div><b>'+corner(si)+'–'+corner(si+1)+'</b><span class="u">'+fromMM(sw.len)+' mm</span><button class="pill sm" data-act="wedit" data-v="'+sw.id+'">Edit</button><button class="pill sm" data-act="delwall" data-v="'+sw.id+'" style="color:var(--red);border-color:var(--red)">Delete</button></div>':'';
+  $('wchip').innerHTML=chipHtml(r);
+  // highlight what is being edited
+  const selHit=G.hits.find(q=>(S.editOpen&&q.open===S.editOpen)||(S.editItem&&q.item===S.editItem)||(S.editPt&&q.point===S.editPt));
+  if(selHit&&!S.clean){s+='<polygon points="'+selHit.quad.map(P).join(' ')+'" fill="'+T.selFill+'" stroke="'+T.sel+'" stroke-width="2" stroke-dasharray="6 4" pointer-events="none"'+ns+'/>';}
   const el=$('svg');el.setAttribute('viewBox',vb.map(x=>+x.toFixed(1)).join(' '));el.innerHTML=s;scaleBar();placeDimPop();
-  $('legend').innerHTML='<span id="coord">X —  Y —</span><span><i style="border-color:'+RM+'"></i>Room (125)</span><span><i style="border-color:'+T.area+';border-top-width:1px"></i>Area (not plotted)</span><span><i style="border-color:'+T.sock+'"></i>Sockets</span><span><i style="border-color:'+T.plumb+'"></i>Plumbing</span><span><i style="border-color:'+T.ink+'"></i>Markup</span><span><i style="border-color:'+T.sel+';border-top-style:dashed"></i>Selected</span><span><i class="sq" style="background:'+T.grip+'"></i>Corner</span><span><i class="sq" style="background:'+T.hot+'"></i>Start (A)</span><span>Grid '+g1+' / '+g5+'</span><span style="color:var(--acct)">Tap any number to change it'+(S.step>=3&&S.step<=5?' · tap a wall to place · drag to move':'')+'</span>';
+  $('legend').innerHTML='<span id="coord">X —  Y —</span><span><i style="border-color:'+RM+'"></i>Room (125)</span><span><i style="border-color:'+T.area+';border-top-width:1px"></i>Area (not plotted)</span><span><i style="border-color:'+T.sock+'"></i>Sockets</span><span><i style="border-color:'+T.plumb+'"></i>Plumbing</span><span><i style="border-color:'+T.ink+'"></i>Markup</span><span><i style="border-color:'+T.sel+';border-top-style:dashed"></i>Selected</span><span><i class="sq" style="background:'+T.grip+'"></i>Corner</span><span><i class="sq" style="background:'+T.hot+'"></i>Start (A)</span><span>Grid '+g1+' / '+g5+'</span><span style="color:var(--acct)">Tap any number to change it'+(S.step>=3&&S.step<=5?' · tap a wall (or the floor, for pillars) to place · drag to move':'')+'</span>';
 }
 /* pan and zoom */
 const svgEl=$('svg'),ptrs=new Map();let moved=false,down=[0,0],zt=0;
@@ -907,10 +923,12 @@ function dimLabel(d){const r=S.p.rooms.find(x=>x.id===d.room);if(!r)return'';con
   if(d.kind==='wall'){const w=wl(d.id);return w?'Wall '+corner(w.i)+'–'+corner(w.i+1):'';}
   const o=find(d.kind.startsWith('open')?r.openings:d.kind.startsWith('item')?r.items:(r.points||[]));if(!o)return'';const w=wl(o.wall);if(!w)return'';
   const nm=d.kind.startsWith('open')?o.type[0].toUpperCase()+o.type.slice(1):d.kind.startsWith('item')?(o.kind==='shaft'?'Shaft':'Pillar'):PT[o.kind].label;
+  if(d.kind==='itemO')return 'Wall '+corner(w.i)+'–'+corner(w.i+1)+' → '+nm;
   return d.kind.endsWith('L')?corner(w.i)+' → '+nm:nm+' → '+corner(w.i+1);}
 function dimValue(d){const r=S.p.rooms.find(x=>x.id===d.room),l=S.G.layouts[r.id],wl=id=>l.walls.find(x=>x.id===id);
   if(d.kind==='wall')return wl(d.id).len;
   const arr=d.kind.startsWith('open')?r.openings:d.kind.startsWith('item')?r.items:(r.points||[]),o=arr.find(x=>x.id===d.id),w=wl(o.wall);
+  if(d.kind==='itemO')return o.off;
   const wd=d.kind.startsWith('pt')?0:o.w,u0=d.kind.startsWith('open')?(o.fromEnd?w.len-o.off-o.w:o.off):(o.fromEnd?w.len-o.along-wd:o.along);
   return d.kind.endsWith('L')?u0:w.len-u0-wd;}
 function placeDimPop(){const pop=$('dimpop'),D=S.dimEdit;if(!D){pop.hidden=true;return;}
@@ -929,12 +947,28 @@ function saveDim(next){const D=S.dimEdit;if(!D)return;const i=$('dimin'),v=num(i
   if(D.kind==='wall'){if(!(v>0))return;const w=r.walls.find(x=>x.id===D.id);
     if(Math.abs(v-w.len)>0.01)commit(()=>{w.len=v;if(r.keepRect&&r.walls.length===4){r.walls[(r.walls.indexOf(w)+2)%4].len=v;}});
     if(next){const k=r.walls.indexOf(w),nx=r.walls[(k+1)%r.walls.length];if(nx&&nx!==w&&!(l.closed&&k===r.walls.length-1)){openDim('wall',r.id,nx.id);return;}}
+  }else if(D.kind==='itemO'){const o=r.items.find(x=>x.id===D.id);if(o&&Math.abs(v-o.off)>0.01)commit(()=>{o.off=v;});
   }else{const arr=D.kind.startsWith('open')?r.openings:D.kind.startsWith('item')?r.items:(r.points||[]),o=arr.find(x=>x.id===D.id),w=wl(o.wall),wd=D.kind.startsWith('pt')?0:o.w;
     let u0=D.kind.endsWith('L')?v:w.len-v-wd;
     if(u0<-0.5||u0+wd>w.len+0.5){S.err='That does not fit: the wall is '+fromMM(w.len)+' mm long.';S.dimEdit=null;render();return;}
     u0=Math.max(0,Math.min(w.len-wd,u0));
     commit(()=>{o.fromEnd=false;if(D.kind.startsWith('open'))o.off=u0;else o.along=u0;});}
   S.dimEdit=null;render();}
+function orthoPill(){return '<div class="pills" style="margin:0 0 10px;align-items:center">'+pill('ortho','',S.ortho?'✓ Ortho 90°':'Ortho 90° off',S.ortho,'sm')+'<span class="hint" style="margin:0 0 0 6px">'+(S.ortho?'Corners square up. Turn off for angled walls.':'Sketched angles kept; 45° snaps.')+'</span></div>';}
+function chipHtml(r){
+  const B=(act,label,on,extra)=>'<button class="pill sm'+(on?' on':'')+'" data-act="'+act+'"'+(extra||'')+'>'+label+'</button>',DEL=(act,id)=>'<button class="pill sm" data-act="'+act+'" data-v="'+id+'" style="color:var(--red);border-color:var(--red)">Delete</button>',DONE='<button class="pill sm" data-act="canceledit">Done</button>';
+  if(S.editOpen){const o=r.openings.find(x=>x.id===S.editOpen);if(!o)return'';const w=r.walls.find(x=>x.id===o.wall),i=r.walls.indexOf(w),nm=o.type[0].toUpperCase()+o.type.slice(1);
+    let h='<div><b>'+nm+'</b><span class="u">'+fromMM(o.w)+' mm</span>';
+    if(o.type==='door'){h+=B('qo:leaves','Single',o.leaves!==2)+B('qo:leaves','Double',o.leaves===2)+'<span class="vsep"></span>'+B('qo:swing','In',o.swing!=='out')+B('qo:swing','Out',o.swing==='out');
+      if(o.leaves!==2)h+=B('qo:hinge','Hinge '+(o.hinge==='end'?corner(i+1):corner(i))+' ⇄',false,' title="Move the hinge to the other side"');}
+    return h+'<span class="vsep"></span>'+DEL('delopen',o.id)+DONE+'</div>';}
+  if(S.editItem){const it=r.items.find(x=>x.id===S.editItem);if(!it)return'';
+    return '<div><b>'+(it.kind==='shaft'?'Shaft':'Pillar')+'</b><span class="u">'+(it.shape==='round'?'Ø'+fromMM(it.w):fromMM(it.w)+'×'+fromMM(it.d))+' mm</span>'+B('qi:shape','▭',it.shape!=='round')+B('qi:shape','◯',it.shape==='round')+B('qi:kind',it.kind==='shaft'?'→ Pillar':'→ Shaft',false)+'<span class="vsep"></span>'+DEL('delitem',it.id)+DONE+'</div>';}
+  if(S.editPt){const q=(r.points||[]).find(x=>x.id===S.editPt);if(!q||!PT[q.kind])return'';
+    return '<div><b>'+PT[q.kind].label+'</b>'+(q.val?'<span class="u">'+esc(q.val)+'</span>':'')+'<span class="vsep"></span>'+DEL('delpt',q.id)+DONE+'</div>';}
+  if(S.step===2){const sw=curWall(r),si=sw?r.walls.indexOf(sw):-1;if(!sw)return'';
+    return '<div><b>'+corner(si)+'–'+corner(si+1)+'</b><span class="u">'+fromMM(sw.len)+' mm</span><button class="pill sm" data-act="wedit" data-v="'+sw.id+'">Edit</button><button class="pill sm" data-act="delwall" data-v="'+sw.id+'" style="color:var(--red);border-color:var(--red)">Delete</button></div>';}
+  return'';}
 function scaleBar(){const el=$('sbar');if(!el)return;const v=S.view||FIT,bb=svgEl.getBoundingClientRect();if(!bb.width||!v[2])return;
   const k=Math.min(bb.width/v[2],bb.height/v[3]);                 // screen pixels per millimetre
   const nice=[100,200,500,1000,2000,5000,10000,20000,50000];let len=nice[0];for(const n of nice){if(n*k<=170)len=n;}
@@ -949,7 +983,7 @@ function uOnWall(w,cx,cy){const q=toWorld(cx,cy),P=[q[0],-q[1]];return V.dot(V.s
 const snap=v=>Math.round(v/10)*10;
 function dragInfo(){const D=S.drag;if(!D)return'';const w=wallAt(D.room,D.wall),o=D.obj,wd=D.kind==='point'?0:o.w;
   const u0=D.kind==='open'?o.off:o.along,a=Math.round(u0),b=Math.round(w.len-u0-wd),i=w.i;
-  return '<div><b>'+corner(i)+' ← '+a+'</b><span class="u">mm</span>'+(D.kind==='point'?'':'<span class="u">'+Math.round(wd)+' wide</span>')+'<b>'+b+' → '+corner(i+1)+'</b><span class="u">mm</span></div>';}
+  return '<div><b>'+corner(i)+' ← '+a+'</b><span class="u">mm</span>'+(D.kind==='point'?'':'<span class="u">'+Math.round(wd)+' wide</span>')+'<b>'+b+' → '+corner(i+1)+'</b><span class="u">mm</span>'+(D.kind==='item'?'<b>↥ '+Math.round(o.off)+'</b><span class="u">from wall '+corner(i)+'–'+corner(i+1)+'</span>':'')+'</div>';}
 function rdp(pts,tol){if(pts.length<3)return pts;const a=pts[0],b=pts[pts.length-1],ab=V.sub(b,a),L=V.len(ab)||1;let mx=0,ix=0;
   for(let i=1;i<pts.length-1;i++){const d=Math.abs(V.cross(ab,V.sub(pts[i],a)))/L;if(d>mx){mx=d;ix=i;}}
   return mx>tol?rdp(pts.slice(0,ix+1),tol).slice(0,-1).concat(rdp(pts.slice(ix),tol)):[a,b];}
@@ -963,6 +997,7 @@ svgEl.addEventListener('pointerdown',e=>{
     const obj=(kind==='open'?r.openings:kind==='item'?r.items:(r.points||[])).find(x=>x.id===id),w=obj&&wallAt(rid,obj.wall);
     if(obj&&w){const u=kind==='open'?(obj.fromEnd?w.len-obj.off-obj.w:obj.off):kind==='item'?(obj.fromEnd?w.len-obj.along-obj.w:obj.along):(obj.fromEnd?w.len-obj.along:obj.along);
       S.drag={room:rid,wall:obj.wall,kind:kind,obj:obj,grab:uOnWall(w,e.clientX,e.clientY)-u,start:JSON.stringify(S.p),sx:e.clientX,sy:e.clientY,live:false};
+      if(kind==='item')S.drag.grab2=V.sub(worldPt(e.clientX,e.clientY),itemCentre(w,obj));
       S.drag.pid=e.pointerId;moved=false;e.preventDefault();return;}}}
   ptrs.set(e.pointerId,[e.clientX,e.clientY]);if(ptrs.size===1){moved=false;down=[e.clientX,e.clientY];}});
 svgEl.addEventListener('pointermove',e=>{const K=S.ink;if(!K||e.pointerId!==K.pid)return;
@@ -973,10 +1008,19 @@ function rdpLoop(pts,tol){   // closed or nearly closed strokes: split at the fa
   if(pts.length<3)return pts.slice();let k=0,mx=0;pts.forEach((q,i)=>{const d=V.len(V.sub(q,pts[0]));if(d>mx){mx=d;k=i;}});
   if(V.len(V.sub(pts[0],pts[pts.length-1]))>mx*0.3)return rdp(pts,tol);
   return rdp(pts.slice(0,k+1),tol).concat(rdp(pts.slice(k),tol).slice(1));}
+const curOpen=()=>S.editOpen&&room().openings.find(x=>x.id===S.editOpen);
+const curItem=()=>S.editItem&&room().items.find(x=>x.id===S.editItem);
+function liveOpen(ch){   // when a door or window is selected, a change applies straight away (Undo puts it back)
+  const o=curOpen();if(!o){render();return;}
+  const r=room(),w=r.walls.find(x=>x.id===o.wall);
+  commit(()=>{const u0=o.fromEnd?w.len-o.off-o.w:o.off;Object.keys(ch).forEach(k=>{if(ch[k]!==undefined)o[k]=ch[k];});
+    if(ch.w!==undefined){const wd=Math.min(ch.w,w.len);o.w=wd;o.fromEnd=false;o.off=Math.max(0,Math.min(w.len-wd,u0));S.dOpen.off=fromMM(o.off);S.dOpen.fromEnd=false;}
+    if(o.type!=='door'){o.leaves=1;}});
+  render();}
 const sketchWhat=()=>({2:'walls',3:S.dOpen.type+'s',4:S.dItem.kind+'s',5:'points'}[S.step]||'markup');
 const snapLen=v=>Math.round(v/50)*50;
-function snapTurn(t){for(const c of [0,45,-45,90,-90,135,-135,180]){if(Math.abs(norm180(t-c))<=20)return c;}return Math.round(t/5)*5;}
-function snapHead(h){for(const c of [0,90,180,-90]){if(Math.abs(norm180(h-c))<=12)return c;}return Math.round(h/15)*15;}
+function snapTurn(t){if(S.ortho){const q=Math.round(norm180(t)/90)*90;return q===-180?180:q;}for(const c of [0,45,-45,90,-90,135,-135,180]){if(Math.abs(norm180(t-c))<=20)return c;}return Math.round(t/5)*5;}
+function snapHead(h){if(S.ortho)return norm180(Math.round(h/90)*90);for(const c of [0,90,180,-90]){if(Math.abs(norm180(h-c))<=12)return c;}return Math.round(h/15)*15;}
 function strokeWalls(pts){   // stroke → wall list: [{len,turn}], plus closed / first heading
   const v=S.view||FIT,tol=Math.max(80,v[2]/70);let V0=rdpLoop(pts,tol);
   const per=V0.reduce((a,q,i)=>i?a+V.len(V.sub(q,V0[i-1])):0,0),closed=V0.length>=4&&V.len(V.sub(V0[0],V0[V0.length-1]))<Math.max(300,per*0.12);
@@ -986,6 +1030,13 @@ function strokeWalls(pts){   // stroke → wall list: [{len,turn}], plus closed 
   const h0=snapHead(segs[0].h);let out=[{len:snapLen(segs[0].len),turn:0}],hp=h0;
   for(let i=1;i<segs.length;i++){let t=snapTurn(norm180(segs[i].h-hp));if(t===0){out[out.length-1].len+=snapLen(segs[i].len);continue;}out.push({len:snapLen(segs[i].len),turn:t});hp+=t;}
   out=out.filter(w=>w.len>0);return{walls:out,closed:closed,h0:h0,start:V0[0]};}
+function anchorItem(lay,P,wd,dp){   // pillars and shafts sit anywhere: measured from the nearest wall
+  let best=null;for(const w of lay.walls){const r=V.sub(P,w.A),u=V.dot(r,w.d),uc=Math.max(0,Math.min(w.len,u)),dd=V.len(V.sub(P,V.add(w.A,V.mul(w.d,uc))));
+    if(-V.dot(r,w.n)<-1)continue;if(!best||dd<best.dd)best={w:w,dd:dd,u:u,v:-V.dot(r,w.n)};}
+  if(!best)for(const w of lay.walls){const r=V.sub(P,w.A),u=V.dot(r,w.d),dd=Math.abs(V.dot(r,w.n));if(!best||dd<best.dd)best={w:w,dd:dd,u:u,v:Math.abs(V.dot(r,w.n))};}
+  if(!best)return null;let off=Math.max(0,snap(best.v-dp/2));if(off<80)off=0;   // close to the wall: it sits against it
+  return{wall:best.w.id,w:best.w,along:snap(best.u-wd/2),off:off};}
+function itemCentre(w,it){const dp=it.shape==='round'?it.w:it.d,u0=it.fromEnd?w.len-it.along-it.w:it.along;return WP(w,u0+it.w/2,-(it.off+dp/2));}
 function nearestWall(lay,pts){let best=null;
   for(const w of lay.walls){let sum=0;for(const P of pts){const r=V.sub(P,w.A),u=Math.max(0,Math.min(w.len,V.dot(r,w.d))),q=V.add(w.A,V.mul(w.d,u));sum+=V.len(V.sub(P,q));}
     const avg=sum/pts.length;if(!best||avg<best.avg)best={w:w,avg:avg};}
@@ -1001,15 +1052,22 @@ function buildFromStroke(pts){
     commit(()=>{
       if(cont){const lastH=lay.walls[lay.walls.length-1].h,first=res.walls[0];first.turn=snapTurn(norm180(res.h0-lastH));}
       else{target.place={mode:'free',x:Math.round(res.start[0]),y:Math.round(res.start[1]),rot:res.h0};}
-      let add=res.walls;if(res.closed&&add.length>=3)add=add.slice(0,-1);   // the last side is computed so the room closes exactly
+      const sq=S.ortho&&res.closed&&res.walls.length>=4;   // Ortho: the last two sides are worked out square, so the room closes with 90° corners
+      let add=res.walls;if(res.closed&&add.length>=3)add=add.slice(0,sq?-2:-1);   // the last side(s) are computed so the room closes exactly
       add.forEach((w,i)=>target.walls.push({id:uid(),len:w.len,turn:(!cont&&i===0&&!target.walls.length)?0:w.turn,t:null,m:null}));
-      if(res.closed&&target.walls.length>=2){const L2=layoutProject(S.p)[target.id];if(!L2.closed){target.walls.push(closingWall(target,L2));}}
+      if(sq){const L2=layoutProject(S.p)[target.id],n=target.walls.length,lw=L2.walls[n-1],E=L2.pts[n],g=V.sub(L2.pts[0],E),d=lw.d,pp=[-d[1],d[0]],av=V.dot(g,pp),bv=V.dot(g,d);let dir=d;
+        if(Math.abs(av)>=5){target.walls.push({id:uid(),len:Math.round(Math.abs(av)),turn:av>0?90:-90,t:null,m:null});dir=av>0?pp:V.mul(pp,-1);}
+        if(Math.abs(bv)>=5){const nd=bv>0?d:V.mul(d,-1);target.walls.push({id:uid(),len:Math.round(Math.abs(bv)),turn:V.cross(dir,nd)>0?90:-90,t:null,m:null});}
+        if(!layoutProject(S.p)[target.id].closed){target.walls.splice(n);const L4=layoutProject(S.p)[target.id];target.walls.push(closingWall(target,L4));}}
+      else if(res.closed&&target.walls.length>=2){const L2=layoutProject(S.p)[target.id];if(!L2.closed){target.walls.push(closingWall(target,L2));}}
       const L3=layoutProject(S.p)[target.id];target.keepRect=L3.closed&&target.walls.length===4&&target.walls.every((w,i)=>!i||Math.abs(Math.abs(w.turn)-90)<0.01);
       S.room=target.id;S.wall=target.walls[target.walls.length-1].id;});
     const L=S.G.layouts[target.id];
     S.msg=(target!==r?'New room: ':'')+res.walls.length+' wall'+(res.walls.length>1?'s':'')+' sketched'+(L&&L.closed?' and closed':'')+'. Tap any length to set the exact size.';render();return;}
   if(!lay.walls.length){S.err='Draw the walls first.';render();return;}
-  const nw=nearestWall(lay,pts);if(!nw||nw.avg>Math.max(nw.w.t+500,v[2]/14)){S.err='Draw it on or next to a wall.';render();return;}
+  let nw;if(S.step===4&&lay.closed){const c=[pts.reduce((a,q)=>a+q[0],0)/pts.length,pts.reduce((a,q)=>a+q[1],0)/pts.length],an=anchorItem(lay,c,0,0);nw=an&&{w:an.w,avg:0};}   // pillars and shafts: anywhere in the room
+  else nw=nearestWall(lay,pts);
+  if(!nw||nw.avg>Math.max(nw.w.t+500,v[2]/14)){S.err=S.step===4?'Draw it inside the room.':'Draw it on or next to a wall.';render();return;}
   const w=nw.w,us=pts.map(P=>V.dot(V.sub(P,w.A),w.d)),vs=pts.map(P=>V.dot(V.sub(P,w.A),w.n));
   let u0=Math.max(0,Math.min(...us)),u1=Math.min(w.len,Math.max(...us));S.wall=w.id;
   if(S.step===3){const d=S.dOpen;let wd=snapLen(u1-u0);if(wd<500){const def=num(d.w)>0?num(d.w):(d.type==='door'?900:d.type==='window'?1200:1000);u0=(u0+u1)/2-def/2;wd=def;}
@@ -1029,8 +1087,10 @@ function endInk(){const K=S.ink;if(!K)return false;S.ink=null;if(!K.live)return 
   if(pts.length>1)commit(()=>{S.p.ink=S.p.ink||[];S.p.ink.push({id:uid(),pts:pts});});else renderSketch();return true;}
 svgEl.addEventListener('pointermove',e=>{const D=S.drag;if(!D)return;
   if(!D.live){if(Math.hypot(e.clientX-D.sx,e.clientY-D.sy)<6)return;D.live=true;moved=true;try{svgEl.setPointerCapture(D.pid);}catch(x){}}
-  const w=wallAt(D.room,D.wall),o=D.obj,wd=D.kind==='point'?0:o.w;let u=snap(uOnWall(w,e.clientX,e.clientY)-D.grab);u=Math.max(0,Math.min(w.len-wd,u));
-  o.fromEnd=false;if(D.kind==='open')o.off=u;else o.along=u;
+  const w=wallAt(D.room,D.wall),o=D.obj,wd=D.kind==='point'?0:o.w;
+  if(D.kind==='item'){const lay=S.G.layouts[D.room],a=anchorItem(lay,V.sub(worldPt(e.clientX,e.clientY),D.grab2),o.w,o.shape==='round'?o.w:o.d);
+    if(a){o.wall=a.wall;D.wall=a.wall;o.fromEnd=false;o.along=a.along;o.off=a.off;}}
+  else{let u=snap(uOnWall(w,e.clientX,e.clientY)-D.grab);u=Math.max(0,Math.min(w.len-wd,u));o.fromEnd=false;if(D.kind==='open')o.off=u;else o.along=u;}
   S.G=buildGeometry(S.p);renderSketch();$('wchip').innerHTML=dragInfo();});
 function endDrag(){const D=S.drag;if(!D)return false;S.drag=null;
   if(D.live){S.undo.push(D.start);if(S.undo.length>60)S.undo.shift();S.redo=[];save();S.msg='Moved. Undo puts it back.';render();}
@@ -1116,6 +1176,7 @@ const A={
   pwall:v=>commit(()=>{const r=room(),ar=S.p.rooms.find(x=>x.id===r.place.room)||S.p.rooms[0],aw=ar.walls.find(w=>w.id===v);r.place.room=ar.id;r.place.wall=v;r.place.along=r.place.flip?0:aw.len;}),
   pflip:v=>commit(()=>{room().place.flip=v==='1';}),
   wdir:v=>{S.dWall.dir=v;render();},
+  ortho:()=>{S.ortho=!S.ortho;try{localStorage.setItem('dxf-sketch-ortho',S.ortho?'on':'off');}catch(e){}S.msg=S.ortho?'Ortho on: walls square up at 90°.':'Ortho off: sketched walls keep 45° and other angles.';render();},
   qturn:v=>{const q=v.split(':');S.dWall.dir=q[0];S.dWall.ang=q[1];render();const e=$('wlen');if(e)e.focus();},
   shape:v=>{S.shape=v;render();},
   mkshape:()=>{const r=room(),d=S.dShape,W=num(d.w),D=num(d.d),sh=S.shape||'rect';
@@ -1134,13 +1195,13 @@ const A={
   rotroom:()=>commit(()=>{const r=room();r.place=r.place||{mode:'free',x:0,y:0,rot:0};r.place.rot=((r.place.rot||0)+90)%360;S.view=null;}),
   mirroom:()=>{commit(()=>{const r=room();r.walls.forEach((w,i)=>{if(i)w.turn=-(w.turn||0);});r.openings.forEach(o=>{if(o.type==='door'&&o.leaves!==2)o.hinge=o.hinge==='end'?'start':'end';});S.view=null;});S.msg='Mirrored. Doors keep their side of the wall; check the hinges.';render();},
   keeprect:()=>commit(()=>{const r=room();r.keepRect=!r.keepRect;}),
-  opreset:v=>{S.dOpen.w=String(v);if(S.dOpen.type==='door')S.dOpen.leaves=+v>=1600?2:1;render();},
+  opreset:v=>{S.dOpen.w=String(v);if(S.dOpen.type==='door')S.dOpen.leaves=+v>=1600?2:1;liveOpen({w:+v,leaves:S.dOpen.type==='door'?S.dOpen.leaves:undefined});},
   ipreset:v=>{S.dItem.w=String(v);if(!S.dItem.d)S.dItem.d=String(v);render();},
   addwall:()=>{const r=room(),d=S.dWall,len=toMM(d.len),a=num(d.ang),tk=String(d.t).trim()===''?null:num(d.t);
     if(tk!==null&&!(tk>=0)){S.err='The wall thickness must be a number.';return render();}
     if(!(len>0)){S.err='Enter the wall length.';return render();}
     if(r.walls.length&&!(a>=0&&a<180)){S.err='The turn angle must be between 0 and 180.';return render();}
-    commit(()=>{const ia=S.insAfter?r.walls.findIndex(x=>x.id===S.insAfter):-1,w={id:uid(),len:len,turn:(ia>=0||r.walls.length)?(d.dir==='R'?-a:a):0,t:tk,m:d.m||null};if(ia>=0){r.walls.splice(ia+1,0,w);S.insAfter=null;d.ang='90';}else r.walls.push(w);S.wall=w.id;d.len='';});
+    commit(()=>{const ia=S.insAfter?r.walls.findIndex(x=>x.id===S.insAfter):-1,w={id:uid(),len:len,turn:(ia>=0||r.walls.length)?(d.dir==='R'?-a:a):0,t:tk,m:d.m||null};if(ia>=0){r.walls.splice(ia+1,0,w);S.insAfter=null;d.ang='90';}else r.walls.push(w);S.wall=w.id;d.len='';if(S.ortho){d.ang='90';}});
     const e=$('wlen');if(e)e.focus();},
   delwall:v=>{const r=room(),i=r.walls.findIndex(w=>w.id===v);if(i<0)return;
     const cnt=r.openings.filter(o=>o.wall===v).length+r.items.filter(o=>o.wall===v).length+(r.points||[]).filter(o=>o.wall===v).length,lab=wLabel(r,r.walls[i]);
@@ -1164,8 +1225,13 @@ const A={
     S.toastUndo=true;S.msg='Split '+fromMM(L)+' mm into '+fromMM(L1)+' + '+fromMM(nw.len)+' mm. Edit either half to put the corner where it belongs.';}),
   close:()=>commit(()=>{const r=room(),w=closingWall(r,S.G.layouts[r.id]);r.walls.push(w);S.wall=w.id;}),
   stretch:()=>commit(()=>{const r=room(),old=r.walls.pop(),tmp=layoutProject(S.p)[r.id],w=closingWall(r,tmp);w.id=old.id;w.t=old.t;r.walls.push(w);}),
-  otype:v=>{S.dOpen.type=v;render();},ofrom:v=>{S.dOpen.fromEnd=v==='1';render();},oleaves:v=>{S.dOpen.leaves=+v;render();},
-  ohinge:v=>{S.dOpen.hinge=v;render();},oswing:v=>{S.dOpen.swing=v;render();},
+  otype:v=>{S.dOpen.type=v;liveOpen({type:v});},ofrom:v=>{S.dOpen.fromEnd=v==='1';render();},oleaves:v=>{S.dOpen.leaves=+v;liveOpen({leaves:+v});},
+  ohinge:v=>{S.dOpen.hinge=v;liveOpen({hinge:v});},oswing:v=>{S.dOpen.swing=v;liveOpen({swing:v});},
+  'qo:leaves':function(){const o=curOpen();if(o)A.oleaves(o.leaves===2?'1':'2');},
+  'qo:swing':function(){const o=curOpen();if(o)A.oswing(o.swing==='out'?'in':'out');},
+  'qo:hinge':function(){const o=curOpen();if(o)A.ohinge(o.hinge==='end'?'start':'end');},
+  'qi:shape':function(){const it=curItem();if(!it)return;commit(()=>{it.shape=it.shape==='round'?'rect':'round';if(it.shape==='round')it.d=it.w;});S.dItem.shape=it.shape;render();},
+  'qi:kind':function(){const it=curItem();if(!it)return;commit(()=>{it.kind=it.kind==='shaft'?'pillar':'shaft';});S.dItem.kind=it.kind;render();},
   addopen:()=>{const r=room(),w=curWall(r),d=S.dOpen,off=toMM(d.off),wd=toMM(d.w);
     if(!(off>=0)||!(wd>0)){S.err='Enter the distance from the corner and the width.';return render();}
     if(off+wd>w.len+0.5){S.err='That does not fit: the wall is '+fromMM(w.len)+' '+U()+' long.';return render();}
@@ -1258,9 +1324,12 @@ document.addEventListener('click',e=>{
     S.room=t.getAttribute('data-room');S.err='';const o=t.getAttribute('data-open'),it=t.getAttribute('data-item'),pt=t.getAttribute('data-point');
     if(o){S.step=3;A.editopen(o);}else if(it){S.step=4;A.edititem(it);}else if(pt){S.step=5;A.editpt(pt);}
     else{const wid=t.getAttribute('data-wall');S.wall=wid||S.wall;const w=wid&&wallAt(S.room,wid);
-      if(w&&!S.editOpen&&!S.editItem&&!S.editPt&&(S.step===3||S.step===4||S.step===5)){const u=uOnWall(w,e.clientX,e.clientY);
+      if(S.editOpen||S.editItem||S.editPt){S.editOpen=S.editItem=S.editPt=null;render();return;}
+      if(!w&&S.step===4){const lay=S.G.layouts[S.room],P=worldPt(e.clientX,e.clientY),d=S.dItem,wd=num(d.w)>0?num(d.w):400,dp=d.shape==='round'?wd:(num(d.d)>0?num(d.d):wd);
+        const a=lay&&lay.closed&&anchorItem(lay,P,wd,dp);if(a){d.w=String(wd);d.d=String(dp);d.fromEnd=false;d.along=String(a.along);d.off=String(a.off);S.wall=a.wall;A.additem();if(!S.err)S.msg=(d.kind==='shaft'?'Shaft':'Pillar')+' added — drag it anywhere in the room; tap a distance to set it exactly.';}render();return;}
+      if(w&&(S.step===3||S.step===4||S.step===5)){const u=uOnWall(w,e.clientX,e.clientY);
         if(S.step===3){const d=S.dOpen,wd=num(d.w)>0?num(d.w):(d.type==='door'?900:d.type==='window'?1200:1000);d.w=String(wd);d.fromEnd=false;d.off=String(Math.max(0,Math.min(w.len-wd,snap(u-wd/2))));S.room=t.getAttribute('data-room');A.addopen();if(!S.err)S.msg=(d.type[0].toUpperCase()+d.type.slice(1))+' added — drag it to fine-tune.';render();return;}
-        if(S.step===4){const d=S.dItem,wd=num(d.w)>0?num(d.w):400;d.w=String(wd);if(!(num(d.d)>0))d.d=String(wd);d.fromEnd=false;d.along=String(Math.max(0,Math.min(w.len-wd,snap(u-wd/2))));A.additem();if(!S.err)S.msg=(d.kind==='shaft'?'Shaft':'Pillar')+' added — drag it along the wall to fine-tune.';render();return;}
+        if(S.step===4){const d=S.dItem,wd=num(d.w)>0?num(d.w):400;d.w=String(wd);if(!(num(d.d)>0))d.d=String(wd);d.fromEnd=false;d.off='0';d.along=String(Math.max(0,Math.min(w.len-wd,snap(u-wd/2))));A.additem();if(!S.err)S.msg=(d.kind==='shaft'?'Shaft':'Pillar')+' added — drag it anywhere in the room to fine-tune.';render();return;}
         if(S.step===5){const d=S.dPt;d.fromEnd=false;d.along=String(Math.max(0,Math.min(w.len,snap(u))));A.addpt();if(!S.err)S.msg=PT[d.kind].label+' added — drag it to fine-tune.';render();return;}}
       render();}return;}
   if(e.target.closest('input,textarea'))return;
@@ -1337,6 +1406,7 @@ S.p=load();if(!S.p.id)S.p.id=uid();if(S.p.name==='Site sketch')S.p.name='';S.p.u
 render();
 if(window.claude&&typeof window.claude.use==='function'){try{window.claude.use('downloads').then(d=>{DL=d||null;},()=>{});}catch(x){}}
 else if(location.protocol==='http:')fetch('api/ping').then(r=>r.json()).then(j=>{if(j&&j.app==='dxf-sketch'){S.server=true;render();}}).catch(()=>{});
+try{Object.defineProperty(window,"__dxfState",{get:()=>S});}catch(e){}
 })();
 </script>
 </body>
