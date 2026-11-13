@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.11.3 — 13 Nov 2026
+- + Room next door: select a wall (or long-press it) and add a room on its other side. The new room shares that wall, which is drawn once, and starts as a rectangle as long as the wall. Type its depth and you are done; edit or reshape it like any room.
+
 ## 2.11.2 — 13 Nov 2026
 - Leaner screen, nothing shown twice. The header shows the hospital name only. The panel head is one line: the walls and whether the room is closed, plus the step arrows. Step headings, which repeated the active tab, are gone. The title block on the plan is gone too; the laboratory button, header and status bar already show its contents.
 - Type and size buttons (door, window, pillar, shaft, services, furniture) are only on the toolbar above the plan; the panel keeps the measurements. The furniture toolbar is grouped, and fades at the edge when more items scroll. On narrower screens it no longer runs under the zoom buttons.
