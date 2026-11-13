@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.11.1 — 13 Nov 2026
+- Doors, windows and passages snap tight against a pillar or shaft in the same wall, when you tap them in, sketch them or drag them. While dragging, the chip says “against the pillar”, or how far the opening is from the nearest pillar or shaft.
+
 ## 2.11.0 — 13 Nov 2026
 - 2D / 3D: the switch at the top of the zoom buttons shows the laboratory as a 3D model, with doors, windows, pillars, benches, furniture and service points. Drag to turn it, pinch or scroll to zoom, two fingers to move. The walls nearest to you are cut down so you can see in.
 - North: the round arrow under the zoom buttons. Tap it and choose Set from the compass (hold the iPad flat with the plan lined up with the room), or drag the arrow to set it by hand. Turn the plan so north is up in one tap. The DXF gets a north arrow next to each laboratory where north is set; rotating the plan turns north with it.
