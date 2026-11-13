@@ -1,12 +1,18 @@
 // DXF Sketch offline cache. VERSION must match APP_VERSION in index.html; bump both on every release.
-const VERSION = '1.14.0';
+const VERSION = '1.14.1';
 const CACHE = 'dxf-sketch-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 const EXTRA = ['./icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
+// Always take fresh copies from GitHub when a new version installs: skip the browser cache
+// (cache: 'reload') and GitHub's CDN (?v= makes it a new address), then store them under the plain name.
+const fresh = u => fetch(new Request(u + (u.includes('?') ? '&' : '?') + 'v=' + VERSION, {cache: 'reload'}))
+  .then(r => { if (!r.ok) throw new Error(u + ' ' + r.status); return r; });
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE).then(() =>
-    Promise.all(EXTRA.map(u => c.add(u).catch(() => {}))))));   // a missing icon must not stop offline use
+  e.waitUntil(caches.open(CACHE).then(c =>
+    Promise.all(CORE.map(u => fresh(u).then(r => c.put(u, r)))).then(() =>
+      Promise.all(EXTRA.map(u => fresh(u).then(r => c.put(u, r)).catch(() => {}))))));   // a missing icon must not stop offline use
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
@@ -16,7 +22,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('message', e => { if (e.data === 'skip') self.skipWaiting(); });
 
 // Cache first: the app opens instantly and with no signal. Updates arrive through the
-// new service worker (Settings › Check for updates / Reload to update).
+// new service worker (the orange Update button, or Settings › Check for updates).
 self.addEventListener('fetch', e => {
   const req = e.request;
   const url = new URL(req.url);

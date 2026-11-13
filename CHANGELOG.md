@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.1 — 13 Nov 2026
+- Fixed: tapping Update could reload the same old version. Updates now always download fresh files from GitHub, bypassing the browser's and GitHub's caches.
+- If an update still does not take, the app clears its offline copy and reloads the newest version by itself; your projects stay. A message confirms the new version.
+
 ## 1.14.0 — 13 Nov 2026
 - Rooms never keep a gap: change a length, an angle, insert or delete a wall in a closed room and it closes again on its own. The walls that change least are adjusted (e.g. lengthen one side and the opposite side follows), and the message names them. Undo puts them back.
 - If an adjustment would distort the room, the last wall is turned and stretched to meet corner A instead.
