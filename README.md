@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-3.3.0-0696d7)
+![version](https://img.shields.io/badge/version-3.3.1-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -50,3 +50,9 @@ Also:
 Author: Dionysios Theofilopoulos · d.theofilopoulos@gmail.com
 
 Sora font: SIL Open Font License 1.1.
+
+## License
+
+Copyright © 2026 dtheofilopoulos. All rights reserved. You may use the published app and freely use everything you
+make with it; copying, changing or redistributing the code, the AutoCAD blocks or the template needs permission.
+See [LICENSE](LICENSE).

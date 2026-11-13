@@ -46,8 +46,8 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         run: |
           V="${{ steps.v.outputs.version }}"
-          zip -r "DXF-Sketch-$V.zip" index.html sw.js manifest.webmanifest .nojekyll icons laptop README.md CHANGELOG.md VERSION
-          (cd laptop && zip -r "../DXF-Sketch-laptop-$V.zip" DXF-Sketch.py DXF-Sketch.html)
+          zip -r "DXF-Sketch-$V.zip" index.html sw.js manifest.webmanifest .nojekyll icons laptop README.md CHANGELOG.md VERSION LICENSE
+          zip -j "DXF-Sketch-laptop-$V.zip" laptop/DXF-Sketch.py laptop/DXF-Sketch.html LICENSE
 
       - name: Create release
         if: steps.check.outputs.exists == 'false'
