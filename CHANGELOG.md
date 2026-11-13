@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.2.2 — 14 Nov 2026
+- Shared with now starts with the owner (you, with your GitHub name). Whoever opens a shared link sees the owner at the top of Share, with a green dot while the owner has the project open.
+
 ## 3.2.1 — 14 Nov 2026
 - Wording: the app talks about “this device” instead of the iPad, since it runs on any tablet, phone or computer.
 
