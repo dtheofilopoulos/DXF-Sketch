@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.8 — 14 Nov 2026
+- North from the first wall: as soon as a room has its first wall (and north isn't set yet), Walls offers Set north from wall A–B. Stand at corner A, look along the wall towards B (as when you measure it), hold the device flat with its top pointing that way, and tap Read the compass. Not now hides it for that laboratory; the north arrow can still be set or dragged later.
+
 ## 3.3.7 — 14 Nov 2026
 - The compass only shows where north is; it no longer offers to turn the plan (“Turn the plan so north is up” is gone). The landscape / portrait button now first squares up a laboratory that was left turned by a few degrees, so its walls run straight across and up the screen; tap it again to switch between landscape and portrait.
 
