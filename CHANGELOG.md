@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.5.1 — 14 Nov 2026
+- Quit (the power button at the right end of the header; in the File menu on a phone): saves everything, sends the live link its last changes, and closes the app, or, where the browser won't let a page close itself, says everything is saved and it is safe to close, with Back to work.
+
 ## 3.5.0 — 14 Nov 2026
 - Room: the second name is “Name (other language)” instead of Greek, and the first is simply “Name”; the room schedule column follows. It still fills the same line of your Area label.
 - Header: New, Open, Save and Save as are buttons of their own (on a phone they stay in the File menu), and the buttons are grouped with dividers: undo and redo · new, open, save, save as · share and notes · appearance, About and Settings. Header icons are all the same size, the About ⓘ included. The laboratory and room selectors moved to a bar of their own just below the header. The toolbar on the right is grouped too: 3D · zoom · orientation and dimensions · sketch and markup.
