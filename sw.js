@@ -1,5 +1,5 @@
 // DXF Sketch offline cache. Bump VERSION with every release so iPads pick up the update.
-const VERSION = '1.1.0';
+const VERSION = '1.1.1';
 const CACHE = 'dxf-sketch-' + VERSION;
 const FILES = ['./', './index.html', './manifest.webmanifest',
   './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
