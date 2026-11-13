@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.10.0 — 13 Nov 2026
+- Laboratories and rooms: a project is the hospital, each laboratory or department (Microbiology, ER…) is its own plan, and a laboratory can hold several rooms on the same screen. Switch, add, rename or delete laboratories from the laboratory button at the top; + Room adds a room to the plan you are on. The DXF puts every laboratory side by side; the room schedule and CSV list the laboratory of each room. Existing projects open as one laboratory with their rooms in it.
+- Rotate the whole plan 90° either way, from the laboratory menu or by long-pressing the canvas: every room, door, pillar, point and markup line turns with it.
+- Share a link from the new share button at the top: whoever opens it gets their own copy of the whole project (photos stay on your device). If the share sheet is unavailable the link is copied.
+- Point colours on screen and in the DXF: sockets yellow, RJ45 cyan, Water Supply blue, Drain red, and a new Air Supply point (orange) with your Air Tubing block. Air is counted in the room schedule.
+- The Area outline is written first in the DXF, so it always sits behind walls, hatches and everything else.
+- The scale bar sits under the title block, so the Lock and the selection bar are never hidden; the tool palette stays on top; the step arrows are icons only; tap a selected element again to deselect it.
+
 ## 2.9.1 — 13 Nov 2026
 - Sockets, water supply and drain points go on pillars and shafts too: in Sockets & water, tap a pillar or shaft and the point sits on its nearest face, facing out into the room; drag a point near a pillar or shaft and it snaps onto it. It moves with the pillar and exports on it in the DXF.
 - A point on a pillar shows its distances to both corners of that face; tap either to set it. Back to the wall on its bar puts it on the wall again.
