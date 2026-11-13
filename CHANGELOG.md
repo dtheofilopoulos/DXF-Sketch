@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.1 — 13 Nov 2026
+- Pillars and shafts show their real, room-side size everywhere: on the selection bar, in the panel and when you tap their numbers, exactly what you measure on site. Snapping to a wall still draws them on to the outer wall line; that part is not counted in their size.
+- Every pillar and shaft has its size written on it in the drawing (e.g. 400×400, Ø300), on the part that stands in the room.
+- Rotate a pillar or shaft 90° from its bar (⟳ 90°) or the right-click / hold menu: width and depth swap about its centre, and one standing against a wall or in a corner stays there.
+
 ## 2.8.0 — 13 Nov 2026
 - The Area outline and the room area leave out pillars and shafts: a pillar against a wall or in a corner cuts a notch into the Area polyline, one standing free becomes a separate ring, and the AREA attribute, the drawing, the room schedule and the site report all show the net floor area.
 - Tool palette on the drawing: Openings, Pillars & shafts, Sockets & water and Furniture show their choices across the top of the plan (type, common sizes, every furniture item). Pick one and tap where it goes, without going through the side panel.
