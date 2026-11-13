@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.11.0 — 13 Nov 2026
+- 2D / 3D: the switch at the top of the zoom buttons shows the laboratory as a 3D model, with doors, windows, pillars, benches, furniture and service points. Drag to turn it, pinch or scroll to zoom, two fingers to move. The walls nearest to you are cut down so you can see in.
+- North: the round arrow under the zoom buttons. Tap it and choose Set from the compass (hold the iPad flat with the plan lined up with the room), or drag the arrow to set it by hand. Turn the plan so north is up in one tap. The DXF gets a north arrow next to each laboratory where north is set; rotating the plan turns north with it.
+- Clearer screen: the status bar shows only the coordinates, units and one short tip; the colour key opens from the Key button. Shorter step descriptions. Sockets & water is now Services.
+- The fitted plan keeps clear of the title block and scale bar.
+
 ## 2.10.0 — 13 Nov 2026
 - Laboratories and rooms: a project is the hospital, each laboratory or department (Microbiology, ER…) is its own plan, and a laboratory can hold several rooms on the same screen. Switch, add, rename or delete laboratories from the laboratory button at the top; + Room adds a room to the plan you are on. The DXF puts every laboratory side by side; the room schedule and CSV list the laboratory of each room. Existing projects open as one laboratory with their rooms in it.
 - Rotate the whole plan 90° either way, from the laboratory menu or by long-pressing the canvas: every room, door, pillar, point and markup line turns with it.
