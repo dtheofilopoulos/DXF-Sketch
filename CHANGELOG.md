@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.9.0 — 13 Nov 2026
+- Lock walls, pillars and shafts once you are certain of them: Lock on the selected item's bar, or hold / right-click for the menu. Locked items show a small padlock and keep their size and position.
+- Nothing can change a locked item by accident: its numbers do not open for editing, a locked pillar or shaft cannot be dragged, and any change that would move or resize it (keeping a room rectangular, closing a room, deleting) is undone with a message saying which item is locked.
+- When a room closes itself after an edit, it never adjusts a locked wall; it picks other walls instead.
+- Doors, windows and passages on a locked wall stay editable: tapping a segment moves or resizes them inside the wall, and the wall keeps its length.
+- Pillar and shaft sizes on the drawing: the width is centred on the side facing the room and the depth on the side it measures, each turned to read along that side.
+
 ## 2.8.3 — 13 Nov 2026
 - Removed the Bosch laser meter (Bluetooth) connection: the laser button, its Settings section and the shortcut in the measurement bubble are gone. Type or use the number keypad for readings.
 
