@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.2.2 — 14 Nov 2026
+- Floors have a number: set which floor you are on (for example the 3rd), and the ground, 1st and 2nd floors are listed below it, empty, until you work on them. The floor you pick is the one you work on; floors are listed top to bottom, can be added above or below, and their names follow their number unless you rename them.
+- General bug fixes.
+
 ## 1.2.1 — 14 Nov 2026
 - Site survey as a PDF: plan, room schedule, each room with its services, needs, checklist, notes and photos, page-numbered on A4. Names in any language print correctly.
 - Export fits its panel: the buttons wrap onto two columns, with no sideways scrolling.
