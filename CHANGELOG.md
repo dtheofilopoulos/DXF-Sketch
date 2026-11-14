@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.1.0 — 14 Nov 2026
+- Backups: with a GitHub token, every project is backed up as you work into a private Gist on your account (photos stay on the device). Projects shows when each was last backed up, and Settings can back up everything at once or restore a project from the backup.
+- Storage in Settings: how much room your projects and photos take on this device, with a warning before it fills up.
+- Plan to scale (Export): the plan at 1:50 on A4 or A3, or 1:100 if it will not fit, with a title block and scale bar, ready to print or save as PDF.
+- Every release is now checked automatically first: the app opens on tablet, portrait and phone sizes, every step and 3D draw, and the DXF is checked for errors, layers, colours and the 0,0 origin.
+- General bug fixes.
+
 ## 1.0.1 — 14 Nov 2026
 - Tap a room's name on the plan to open its details; tap it again to close them and go back to what you were doing. A second tap on anything selected (a wall, door, pillar, outlet or piece of furniture) lets it go.
 - Devices still on the old 3.x versions now update to this version by themselves.

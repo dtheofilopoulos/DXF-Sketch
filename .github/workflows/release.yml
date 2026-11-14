@@ -1,6 +1,6 @@
 # Publishes a GitHub Release whenever VERSION holds a number that has no release yet.
 # Release notes come from that version's section in CHANGELOG.md; the zip holds the whole app.
-# Every version keeps its release.
+# Every version keeps its release. Nothing is released unless tests/smoke.py passes.
 name: Release
 
 on:
@@ -16,6 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Automatic checks (the app, every step, 3D and the DXF)
+        run: |
+          python -m pip install --quiet playwright ezdxf
+          python -m playwright install --with-deps chromium
+          python tests/smoke.py
 
       - name: Read version
         id: v

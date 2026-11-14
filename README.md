@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.0.1-0696d7)
+![version](https://img.shields.io/badge/version-1.1.0-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -28,6 +28,7 @@ Also:
 - **New, Open, Save, Save as** buttons in the header (a File menu on phones, also with open a project file, save to a file and recent projects); ⌘/Ctrl+S, ⌘/Ctrl+Shift+S, ⌘/Ctrl+O.
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
 - **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings › Live links.
+- **Backups** to a private GitHub Gist as you work, a storage meter in Settings, and **Plan to scale** (1:50 on A4/A3) for printing or PDF.
 - **Photos and notes** per room, kept on the device and carried in the project file and site report.
 - Light and dark themes, undo and redo, several projects per device, screen stays on while you work.
 
@@ -39,7 +40,8 @@ Also:
 | `sw.js` | Offline cache: its `VERSION` must match `APP_VERSION` in `index.html` |
 | `manifest.webmanifest`, `icons/` | Home-screen app |
 | `laptop/DXF-Sketch.py` + `laptop/DXF-Sketch.html` | Optional laptop helper: serves the app on the local network and saves DXFs straight into a `Sketches` folder (`python DXF-Sketch.py`, opens http://dxf-sketch.localhost:8125) |
-| `VERSION`, `CHANGELOG.md` | Release number and history |
+| `VERSION`, `CHANGELOG.md` | Release number and history (important changes only) |
+| `tests/smoke.py` | Automatic checks run before every release: the app opens, every step and 3D draw, the DXF is valid (`pip install playwright ezdxf`, `python -m playwright install chromium`, `python tests/smoke.py`) |
 
 ## Releasing a new version
 
