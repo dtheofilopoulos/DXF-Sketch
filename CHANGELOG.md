@@ -1,5 +1,12 @@
 # Changelog
 
+Important changes only; smaller ones are listed as general bug fixes.
+
+## 1.0.1 — 14 Nov 2026
+- Tap a room's name on the plan to open its details; tap it again to close them and go back to what you were doing. A second tap on anything selected (a wall, door, pillar, outlet or piece of furniture) lets it go.
+- Devices still on the old 3.x versions now update to this version by themselves.
+- General bug fixes.
+
 ## 1.0.0 — 14 Nov 2026
 First release.
 

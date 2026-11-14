@@ -1,6 +1,6 @@
 # Publishes a GitHub Release whenever VERSION holds a number that has no release yet.
 # Release notes come from that version's section in CHANGELOG.md; the zip holds the whole app.
-# Only the current release is kept: older releases and their tags are removed.
+# Every version keeps its release.
 name: Release
 
 on:
@@ -59,15 +59,3 @@ jobs:
           gh release create "v$V" "DXF-Sketch-$V.zip" "DXF-Sketch-laptop-$V.zip" \
             --title "DXF Sketch $V" --notes-file notes.md --target "${{ github.sha }}" --latest
 
-      - name: Keep only the current release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          V="v${{ steps.v.outputs.version }}"
-          gh release list -L 1000 --json tagName -q '.[].tagName' | while read -r t; do
-            if [ -n "$t" ] && [ "$t" != "$V" ]; then gh release delete "$t" --cleanup-tag -y </dev/null; fi
-          done
-          git fetch --tags -q
-          for t in $(git tag -l); do
-            if [ "$t" != "$V" ]; then git push -q origin ":refs/tags/$t" || true; fi
-          done
