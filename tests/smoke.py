@@ -66,6 +66,22 @@ with sync_playwright() as p:
         if vp[0] == 1180:
             dxf = pg.evaluate('()=>window.__dxfTest.toDXF(window.__dxfTest.S.p)')
             plan = pg.evaluate('()=>window.__dxfTest.planPrintHTML()')
+            T = 'window.__dxfTest'
+            el = pg.evaluate('()=>{const T=%s,r=T.S.p.rooms[0];return r.walls.map(w=>T.elevSVG(r,w.id,true).length)}' % T)
+            check(all(n > 500 for n in el), 'an elevation for every wall')
+            nd = pg.evaluate('()=>%s.roomNeeds(%s.S.p.rooms[0]).map(x=>x.k+":"+x.need+"/"+x.have)' % (T, T))
+            check(any(x.startswith('rj:') for x in nd) and any(x.startswith('water:') for x in nd), 'equipment needs counted ' + ', '.join(nd))
+            back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
+            check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
+            sv = pg.evaluate('()=>%s.siteReport()' % T)
+            check('Checklist' in sv and 'Site survey' in sv, 'site survey is made, with the checklist')
+            n2 = pg.evaluate('''()=>{const T=%s,S=T.S,r=S.p.rooms[0],t=T.tplFrom(r,'t');const before=JSON.parse(JSON.stringify(S.p));
+              T.A.addfloor=T.A.addfloor;const fid=T.uid(),lid=T.uid();S.p.floors.push({id:fid,name:'1st floor'});S.p.labs.push({id:lid,name:'Lab B',floor:fid});
+              const r2=JSON.parse(JSON.stringify(r));r2.id=T.uid();r2.lab=lid;r2.furn=[];r2.points=[];r2.num='13';S.p.rooms.push(r2);S.room=r2.id;T.tplApply(r2,t);
+              const rows=T.compareRows(before,S.p);return [r2.furn.length+r2.points.length,rows.filter(x=>x.st==='new').length,T.toDXF(S.p)];}''' % T)
+            check(n2[0] > 5, 'a template fills another room (%d items)' % n2[0])
+            check(n2[1] == 1, 'compare finds the new room')
+            dxf2 = n2[2]
         pg.close()
     b.close()
 srv.shutdown()
@@ -85,6 +101,8 @@ for e in msp.query('LWPOLYLINE'):
         xs.append(q[0]); ys.append(q[1])
 check(abs(min(xs)) < 0.01 and abs(min(ys)) < 0.01, 'plan starts at 0,0 (min %.2f, %.2f)' % (min(xs), min(ys)))
 check('1:' in plan and '<svg' in plan, 'plan to scale is made')
+doc2, aud2 = recover.read(io.BytesIO(dxf2.encode('utf-8')))
+check(not aud2.has_errors and any(e.dxftype() == 'TEXT' and e.dxf.text == '1st floor' for e in doc2.modelspace()), 'two floors export, each named')
 
 print('\n%d problem(s)' % len(fails) if fails else '\nall checks passed')
 sys.exit(1 if fails else 0)

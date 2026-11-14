@@ -2,6 +2,17 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.2.0 — 14 Nov 2026
+- Floors: a hospital has floors, each with its laboratories (the floor button next to Laboratory). The DXF puts each floor in a row of its own, named, one above the other.
+- Wall elevations: any wall seen from inside the room, with doors, windows, pillars, furniture, equipment and services at their heights and a chain of dimensions; print or save it as PDF.
+- Heights: services have a height above the floor (shown in 3D, elevations and the survey), windows a sill and height, and rooms an optional false ceiling.
+- Equipment needs: PCs, printers, sinks, centrifuges, reverse osmosis and the named equipment know which outlets, network points, water and drains they need. Equipment and Services say what is still missing.
+- Templates: save a room's furniture, equipment and services and drop them into another room in one tap.
+- Open an existing DXF as a faint underlay to trace over (File menu or the laboratory menu). It is not exported.
+- Compare with an earlier visit: room by room, what changed in area, walls, openings, services and furniture.
+- Site checklist per room (measured, photographed, services counted, signed off), shown in the room list and the site survey. The site report is now called the site survey.
+- General bug fixes.
+
 ## 1.1.0 — 14 Nov 2026
 - Backups: with a GitHub token, every project is backed up as you work into a private Gist on your account (photos stay on the device). Projects shows when each was last backed up, and Settings can back up everything at once or restore a project from the backup.
 - Storage in Settings: how much room your projects and photos take on this device, with a warning before it fills up.
