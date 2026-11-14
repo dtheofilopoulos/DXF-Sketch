@@ -19,7 +19,7 @@ jobs:
 
       - name: Automatic checks (the app, every step, 3D and the DXF)
         run: |
-          python -m pip install --quiet playwright ezdxf
+          python -m pip install --quiet playwright ezdxf pypdf
           python -m playwright install --with-deps chromium
           python tests/smoke.py
 

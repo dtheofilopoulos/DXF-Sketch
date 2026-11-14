@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.2.1 — 14 Nov 2026
+- Site survey as a PDF: plan, room schedule, each room with its services, needs, checklist, notes and photos, page-numbered on A4. Names in any language print correctly.
+- Export fits its panel: the buttons wrap onto two columns, with no sideways scrolling.
+
 ## 1.2.0 — 14 Nov 2026
 - Floors: a hospital has floors, each with its laboratories (the floor button next to Laboratory). The DXF puts each floor in a row of its own, named, one above the other.
 - Wall elevations: any wall seen from inside the room, with doors, windows, pillars, furniture, equipment and services at their heights and a chain of dimensions; print or save it as PDF.

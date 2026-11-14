@@ -75,6 +75,10 @@ with sync_playwright() as p:
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
             check('Checklist' in sv and 'Site survey' in sv, 'site survey is made, with the checklist')
+            b64 = pg.evaluate('()=>%s.surveyPDF().then(b=>b.arrayBuffer()).then(a=>{let s="";const u=new Uint8Array(a);for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s);})' % T)
+            import base64, pypdf
+            rd = pypdf.PdfReader(io.BytesIO(base64.b64decode(b64)))
+            check(len(rd.pages) >= 1 and abs(float(rd.pages[0].mediabox.width) - 595.28) < 1, 'site survey PDF opens (%d page(s), A4)' % len(rd.pages))
             n2 = pg.evaluate('''()=>{const T=%s,S=T.S,r=S.p.rooms[0],t=T.tplFrom(r,'t');const before=JSON.parse(JSON.stringify(S.p));
               T.A.addfloor=T.A.addfloor;const fid=T.uid(),lid=T.uid();S.p.floors.push({id:fid,name:'1st floor'});S.p.labs.push({id:lid,name:'Lab B',floor:fid});
               const r2=JSON.parse(JSON.stringify(r));r2.id=T.uid();r2.lab=lid;r2.furn=[];r2.points=[];r2.num='13';S.p.rooms.push(r2);S.room=r2.id;T.tplApply(r2,t);

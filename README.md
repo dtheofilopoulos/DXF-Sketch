@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.2.0-0696d7)
+![version](https://img.shields.io/badge/version-1.2.1-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -21,7 +21,7 @@ then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: In
 | 5 Services | Electrical outlets 1P, 1P UPS and 3P UPS, network outlets (RJ45), water supply, drain and air supply: tap the wall, a pillar or a shaft. Exported as your blocks on layer Room, each in its own colour (electrical outlets yellow, network outlets cyan, water blue, drain red, air orange) |
 | 6 Furniture | Benches at any size, bench cabinets, bench drawers, wall cabinets, chairs, stools, bins. On layer Room in colour 125 |
 | 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment. On layer Room in colour 125 |
-| 8 Export | DXF, a printable site survey (plan, room schedule, notes, photos), a plan picture and a room schedule (CSV) |
+| 8 Export | DXF, a site survey as PDF (plan, room schedule, notes, photos), a plan to scale, a plan picture, a room schedule (CSV) and a comparison with an earlier visit |
 
 Also:
 
@@ -42,7 +42,7 @@ Also:
 | `manifest.webmanifest`, `icons/` | Home-screen app |
 | `laptop/DXF-Sketch.py` + `laptop/DXF-Sketch.html` | Optional laptop helper: serves the app on the local network and saves DXFs straight into a `Sketches` folder (`python DXF-Sketch.py`, opens http://dxf-sketch.localhost:8125) |
 | `VERSION`, `CHANGELOG.md` | Release number and history (important changes only) |
-| `tests/smoke.py` | Automatic checks run before every release: the app opens, every step and 3D draw, the DXF is valid (`pip install playwright ezdxf`, `python -m playwright install chromium`, `python tests/smoke.py`) |
+| `tests/smoke.py` | Automatic checks run before every release: the app opens, every step and 3D draw, the DXF and the survey PDF are valid (`pip install playwright ezdxf pypdf`, `python -m playwright install chromium`, `python tests/smoke.py`) |
 
 ## Releasing a new version
 
